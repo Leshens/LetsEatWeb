@@ -8,39 +8,57 @@
 .App-logo {
   height: 150px;
   pointer-events: none;
+  top:15px;
+  left:15px;
+  position: absolute;
 }
 
 .login{
   background-color: #6cdcbb;
   border: none;
   color: black;
-  padding: 15px 32px;
+  padding: 15px 50px;
   text-align: center;
   text-decoration: none;
   display: flex;
-  font-size: 16px;
-  float: right;
-  font-family: "Inter";
+  font-size: 20px;
+  font-family: 'Inter';
+  border-radius: 30px;
+  font-weight: 800;
+  top:10px;
+  right:20px;
+  position: absolute;
 }
 
 .signup{
   background-color: #6cdcbb;
   border: none;
   color: black;
-  padding: 20px 32px;
+  padding: 12px 18px;
   text-align: center;
   text-decoration: none;
   display: flex;
-  font-size: 12px;
+  font-size: 20px;
   float: right;
-  font-family: "Inter";
+  font-family: 'Inter';
+  border-radius: 30px;
+  font-weight: 800;
+  top:80px;
+  right:35px;
+  position: absolute;
 }
 
-.MainText{
-  font-family: 'Inter';
-  text-align: center;
-  font-size: 40px;
-  font-weight: 800;
+.AppStore{
+  height: 50px;
+  position: absolute;
+  top:10px;
+  right:500px;
+}
+.GooglePlay{
+  height: 50px;
+  position: absolute;
+  top:10px;
+  right:300px;
 }
 
 .App-header {
@@ -51,6 +69,60 @@
   justify-content: left;
   font-size: calc(10px + 2vmin);
   color: black;
+}
+
+.MainText{
+  font-family: 'Inter';
+  text-align: center;
+  font-size: 60px;
+  font-weight: 800;
+  top:200px;
+  left: 400px;
+  position: absolute;
+  display: flex;
+}
+
+.table{
+top:200px;
+right: 550px;
+position: absolute;
+display: flex;
+}
+
+.person{
+  top:150px;
+  right:320px;
+  position: absolute;
+  height: 270px;
+  display: flex;
+}
+
+.line{
+  height: 4px;
+  width: 900px;
+  background-color: #6cdcbb;
+  top: 470px;
+  right: 325px;
+  position: absolute;
+}
+
+.SecondText{
+  font-family: 'Inter';
+  text-align: center;
+  font-size: 25px;
+  top: 500px;
+  left: 600px;
+  position: absolute;
+}
+
+.ThirdText{
+  font-family: 'Inter';
+  text-align: center;
+  font-size: 27px;
+  font-weight: 700;
+  top: 600px;
+  left: 680px;
+  position: absolute;
 }
 
 .App-link {
