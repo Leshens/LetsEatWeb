@@ -11,9 +11,9 @@ const Home = () => {
   <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
   <div className="loginButtons">
-    <button class="login" onclick="window.open('/loginPage.js','_blank'">Zaloguj się</button>
+    <button type= "button" class="login" onclick="window.open('/Login','_blank'">Zaloguj się</button>
     <br></br>
-    <button class="signup" onclick="window.open('/loginPage.js','_blank'">Zarejestruj się</button>
+    <button type="button" class="signup" onclick="window.open('/Login','_blank'">Zarejestruj się</button>
   </div>
   <div className="Download">
     <img src={AppStore} className="AppStore" alt="AppStore" />

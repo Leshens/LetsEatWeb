@@ -1,19 +1,31 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./pages/layout";
+import Navbar from "./layout/Navbar";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import RestaurantForm from "./pages/RestaurantForm";
+import SampleMenu from "./pages/SampleMenu";
+import Admin from "./pages/Admin"
 
 
 export default function App() {
   
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navbar />}>
+            <Route path="/" element={<Home/>}/>
+            <Route path='/Login' element={<Login/>}/>
+            <Route path='/SignUp' element={<SignUp/>}/>
+            <Route path='/RestaurantForm' element={<RestaurantForm/>}/>
+            <Route path='/SampleMenu' element={<SampleMenu/>}/>
+            <Route path='/Admin' element={<Admin/>}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
     
   );
 }
