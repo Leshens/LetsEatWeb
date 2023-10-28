@@ -6,16 +6,14 @@ const Navbar = () => {
       <div className="navbar">
         <nav>
               <Link to="/"> Home </Link>
-            
-              <Link to="/Login"> Zaloguj się </Link>
-
-              <Link to="/SignUp"> Zarejestruj się </Link>
 
               <Link to="/RestaurantForm"> Formularz Restauracji </Link>
 
               <Link to="/SampleMenu"> Przykładowe dania </Link>
 
-              <Link to="/Admin"> Panel administratora </Link>
+              <Link to="/AdminMenu"> Panel administratora </Link>
+
+              <Link to="/Tables"> Panel zarządzania stolikami </Link>
             
         </nav>
       </div>

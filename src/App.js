@@ -6,7 +6,8 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import RestaurantForm from "./pages/RestaurantForm";
 import SampleMenu from "./pages/SampleMenu";
-import Admin from "./pages/Admin"
+import AdminMenu from "./pages/AdminMenu"
+import Tables from "./pages/Tables";
 
 
 export default function App() {
@@ -21,7 +22,8 @@ export default function App() {
             <Route path='/SignUp' element={<SignUp/>}/>
             <Route path='/RestaurantForm' element={<RestaurantForm/>}/>
             <Route path='/SampleMenu' element={<SampleMenu/>}/>
-            <Route path='/Admin' element={<Admin/>}/>
+            <Route path='/AdminMenu' element={<AdminMenu/>}/>
+            <Route path='/Tables' element={<Tables/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

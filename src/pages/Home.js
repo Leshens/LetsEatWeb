@@ -11,9 +11,13 @@ const Home = () => {
   <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
   <div className="loginButtons">
-    <button type= "button" class="login" onclick="window.open('/Login','_blank'">Zaloguj się</button>
+    <a href = "/Login">
+    <button type= "button" class="login">Zaloguj się</button>
+    </a>
     <br></br>
-    <button type="button" class="signup" onclick="window.open('/Login','_blank'">Zarejestruj się</button>
+    <a href = "/Signup">
+    <button type="button" class="signup">Zarejestruj się</button>
+    </a>
   </div>
   <div className="Download">
     <img src={AppStore} className="AppStore" alt="AppStore" />
