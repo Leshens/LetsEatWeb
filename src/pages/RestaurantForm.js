@@ -1,6 +1,25 @@
 import { Formik } from "formik";
+import Dropdown from "./Dropdown"; 
 
 export default function RestaurantForm() {
+    const options = [
+        { value: "american", label: "Amerykańskie"},
+        { value: "asian", label: "Azjatyckie"},
+        { value: "middleeastern", label: "Bliskowschodnie"},
+        { value: "burgers", label: "Burgery"},
+        { value: "desserts", label: "Desery"},
+        { value: "european", label: "Europejskie"},
+        { value: "indian", label: "Indyjskie"},
+        { value: "mexican", label: "Meksykańskie"},
+        { value: "pancake", label: "Naleśniki"},
+        { value: "pizza", label: "Pizza"},
+        { value: "salads", label: "Sałatki"},
+        { value: "sushi", label: "Sushi"},
+        { value: "breakfast", label: "Śniadanie"},
+        { value: "vegetarian", label: "Wegetariańskie"},
+        { value: "italian", label: "Włoskie"},
+        { value: "healthy_cuisine", label: "Zdrowa kuchnia"},
+    ]
     return (
         <div className="restaurantForm">
             <p>Wypełnij formularz poniżej, żeby zacząć z nami współpracować</p>
@@ -14,12 +33,9 @@ export default function RestaurantForm() {
                 className="form-control"
                />
                <br></br>
-               <input
-                type="string"
-                name="restaurant-type"
-                placeholder="rodzaj restauracji"
-                className="form-control"
-               />
+               <div className="Dropdown">
+                    <Dropdown isMulti placeHolder="Wybierz Rodzaj Restauracji..." options={options} />
+                </div>
                <br></br>
                <input
                 type="string"
@@ -42,7 +58,7 @@ export default function RestaurantForm() {
                 className="form-control"
                />
                <br></br>
-               <label>Ilość stolików 2-osobowych :</label>
+               <label>Ilość stolików 2-osobowych:</label>
                <input
                 type="number"
                 name="2p table"
@@ -74,7 +90,7 @@ export default function RestaurantForm() {
                 className="form-control"
                />
                <br></br>
-               <button type="submit">Dalej</button>
+               <a href="SampleMenu">Dalej</a>
             </div>
             </Formik>
         </div>

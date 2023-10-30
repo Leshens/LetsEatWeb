@@ -1,20 +1,20 @@
 @import url('https://rsms.me/inter/inter.css');
 
 
-.App {
+/* .App {
   text-align: center;
   height: 100%;
-}
+} */
 
-.App-logo {
+/* .App-logo {
   height: 150px;
   pointer-events: none;
   top:15px;
   left:15px;
   position: absolute;
-}
+} */
 
-.login{
+/* .login{
   background-color: #6cdcbb;
   border: none;
   color: black;
@@ -29,9 +29,9 @@
   top:10px;
   right:20px;
   position: absolute;
-}
+} */
 
-.signup{
+/* .signup{
   background-color: #6cdcbb;
   border: none;
   color: black;
@@ -47,9 +47,9 @@
   top:80px;
   right:35px;
   position: absolute;
-}
+} */
 
-.AppStore{
+/* .AppStore{
   height: 50px;
   position: absolute;
   top:10px;
@@ -60,9 +60,9 @@
   position: absolute;
   top:10px;
   right:300px;
-}
+} */
 
-.App-header {
+/* .App-header {
   background-color: white;
   min-height: 80px;
   display: flex;
@@ -70,9 +70,9 @@
   justify-content: left;
   font-size: calc(10px + 2vmin);
   color: black;
-}
+} */
 
-.MainText{
+/* .MainText{
   font-family: 'Inter';
   text-align: center;
   font-size: 60px;
@@ -81,14 +81,9 @@
   left: 30%;
   position: absolute;
   display: inline-block;
-}
+} */
 
-.banner{
-  text-align: center;
-  background-color: blue;
-}
-
-.table{
+/* .table{
 top:38%;
 right: 45% ;
 position: absolute;
@@ -101,27 +96,27 @@ display: inline-block;
   position: absolute;
   height: 270px;
   display:inline-block;
-}
+} */
 
-.line{
+/* .line{
   height: 4px;
   width: 70%;
   background-color: #6cdcbb;
   top: 55%;
   right: 325px;
   position: absolute;
-}
+} */
 
-.SecondText{
+/* .SecondText{
   font-family: 'Inter';
   text-align: center;
   font-size: 25px;
   top: 60%;
   left: 40%;
   position: absolute;
-}
+} */
 
-.ThirdText{
+/* .ThirdText{
   font-family: 'Inter';
   text-align: center;
   font-size: 27px;
@@ -129,9 +124,9 @@ display: inline-block;
   top: 70%;
   left: 43%;
   position: absolute;
-}
+} */
 
-.App-link {
+/* .App-link {
   color: #61dafb;
-}
+} */
 

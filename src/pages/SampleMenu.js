@@ -45,9 +45,11 @@ export default function SampleMenu() {
                <br></br>
                <button type = "button">Dodaj zdjęcie</button>
                <br></br>
-               <button type="submit">Zakończ</button>
+               <a href="AdminMenu">Zakończ</a>
             </div>
             </Formik>
         </div>
     )
   };
+
+  //<button type="submit">Zakończ</button>

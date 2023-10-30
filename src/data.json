@@ -1,0 +1,10 @@
+[
+    {
+        "id": 1,
+        "nazwa": "Restaurax",
+        "rodzaj": "Azjatyckie",
+        "godzinyOtwarcia": "10:00-21:00",
+        "adres": "Sezamowa 5",
+        "telefon": "213 769 420"
+    }
+]

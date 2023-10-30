@@ -93,9 +93,9 @@ const initialValues={
                           {errors.password && touched.password ? (<p className="form-text error">{errors.password}</p>) : null}
                           {/* Click on submit button to submit the form */}
                           <br></br>
-                          <button disabled={isSubmitting} type="submit">
-                            Zarejestruj się
-                          </button>
+                          <a href="RestaurantForm">
+                            Dalej
+                          </a>
                         </Form>
                         <p>Masz już konto?</p>
                         <a href="Login">Zaloguj się</a>
@@ -107,3 +107,5 @@ const initialValues={
     </div>
   );
 }
+
+/*<button disabled={isSubmitting} type="submit"></button>*/

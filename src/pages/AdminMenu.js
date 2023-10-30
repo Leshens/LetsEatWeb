@@ -1,82 +1,82 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { Link } from 'react-router-dom';
+import React, { useRef, useState } from 'react'
+import Data from '../data.json'
+import '../Table.css'
 
 export default function AdminMenu() {
-  const[users,setUsers]=useState([]);
+    const [data, setData] = useState(Data)
+    return ( 
+        <div className='tableWrap'>
+            <div>
+                <AddRestaurant setData={setData}/>
+                <table>
+                    <thead>
+                        <th>Nazwa</th>
+                        <th>Rodzaj</th>
+                        <th>Godziny Otwarcia</th>
+                        <th>Adres</th>
+                        <th>Telefon</th>
+                        <th>Action</th>
+                    </thead>
+                {
+                    data.map((current) => (
+                        <tr>
+                            <td>{current.nazwa}</td>
+                            <td>{current.rodzaj}</td>
+                            <td>{current.godzinyOtwarcia}</td>
+                            <td>{current.adres}</td>
+                            <td>{current.telefon}</td>
+                            <td>
+                                <button className='edit'>Edit</button>
+                                <button className='delete'>Delete</button>
+                            </td>
+                        </tr>
 
-      useEffect(() => {
-        loadUsers();    
-    },[])
-
-    const loadUsers = async()=>{
-       /* await axios
-        .get("http://localhost:8080/users")
-        .then(response => {
-            setUsers(response.data);
-        })
-        .catch(error => {
-            console.log(error.response.data.error)
-         })*/
-    }
-    const deleteUser = async (id) => {
-        //await axios.delete(`http://localhost:8080/deleteuser/${id}`);
-        //loadUsers();
-      };
-      return (
-        <div className='container'>
-            <h1>Panel administratora</h1>
-            <h2>Dane restauracji</h2>  
-          <div className='py-4'>
-          <table className="table table-dark table-hover table-striped-columns">
-              <thead>
-                  <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Nazwa</th>
-                  <th scope="col">Rodzaj</th>
-                  <th scope="col">Godziny<br></br> otwarcia</th>
-                  <th scope="col">Adres</th>
-                  <th scope="col">Telefon</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {
-                      users.map((user,index)=>(
-                          <tr>
-                          <th scope="row" key={index}>{index+1}</th>
-                          <td>{user.firstName}</td>
-                          <td>{user.email}</td>
-                          <td>{user.mobileNumber}</td> 
-                          <td>{user.password}</td> 
-                          <td>{String(user.admin)}</td>
-                          <td>{String(user.chef)}</td> 
-                          <td>{String(user.waiter)}</td> 
-                          <td>{String(user.quartermaster)}</td> 
-                          <td>{user.registeredAt}</td> 
-                          <td>{user.lastLogIn}</td> 
-                          <td>
-                              <Link
-                                  className="btn btn-primary mx-2 d-inline "
-                                  to={`/viewuser/${user.userId}`}
-                               >
-                                  View
-                              </Link>
-                              <Link
-                                  className='btn btn-outline-success mx-2 d-inline '
-                                  to={`/edituser/${user.userId}`}>Edit</Link>
-                              <button
-                                  className="btn btn-danger mx-2 d-inline "
-                                  onClick={() => deleteUser(user.userId)}
-                              >
-                                  Delete
-                              </button>
-                          </td>
-                      </tr>
-                      ))
-                  }
-              </tbody>
-          </table>
-          </div>
-      </div>
+                    ))
+                }
+                </table>
+            </div>
+        </div>
     )
   }
+
+  function AddRestaurant({setData}) {
+    const nazwaRef= useRef()
+    const rodzajRef= useRef()
+    const hoursRef= useRef()
+    const adresRef= useRef()
+    const telefonRef= useRef()
+
+    function handleValues(event) {
+        event.preventDefault();
+        const nazwa =  event.target.elements.nazwa.value;
+        const rodzaj =  event.target.elements.rodzaj.value;
+        const hours =  event.target.elements.hours.value;
+        const adres =  event.target.elements.adres.value;
+        const telefon =  event.target.elements.telefon.value;
+        const newRestaurant = {
+            id: 4,
+            nazwa,
+            rodzaj,
+            hours,
+            adres,
+            telefon,
+        }
+        setData(prevData => prevData.concat(newRestaurant))
+        nazwaRef.current.value = ""
+        rodzajRef.current.value = ""
+        hoursRef.current.value = ""
+        adresRef.current.value = ""
+        telefonRef.current.value = ""
+    }
+    return(
+        <form className='addForm' onSubmit={handleValues}>
+            <input type="text" name="nazwa" placeholder="Wpisz nazwę" ref={nazwaRef}/>
+            <input type="text" name="rodzaj" placeholder="Wpisz rodzaj restauracji" ref={rodzajRef}/>
+            <input type="text" name="hours" placeholder="Podaj godziny otwarcia" ref={hoursRef}/>
+            <input type="text" name="adres" placeholder="Podaj adres" ref={adresRef}/>
+            <input type="text" name="telefon" placeholder="Podaj telefon" ref={telefonRef}/>
+            <button>Add</button>
+        </form>
+    )
+  }
+
