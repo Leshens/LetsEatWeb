@@ -1,0 +1,10 @@
+[
+    {
+        "id": 1,
+        "nazwa": "Stoliki",
+        "twoSeater": "10",
+        "fourSeater": "5",
+        "sixSeater": "3",
+        "eightSeater": "1"
+    }
+]

@@ -7,7 +7,11 @@ const Navbar = () => {
         <nav>
               <Link to="/"> Home </Link>
 
-              <Link to="/Tables"> Panel zarządzania stolikami </Link>
+              <Link to="/Tables"> Panel zarządzania stolikami (old) </Link>
+
+              <Link to="/MenuTable"> Panel zarządzania menu </Link>
+
+              <Link to="/StolikiTable"> Panel zarządzania stolikami </Link>
             
         </nav>
       </div>

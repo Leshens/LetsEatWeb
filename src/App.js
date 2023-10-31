@@ -8,6 +8,8 @@ import RestaurantForm from "./pages/RestaurantForm";
 import SampleMenu from "./pages/SampleMenu";
 import AdminMenu from "./pages/AdminMenu"
 import Tables from "./pages/Tables";
+import MenuTable from "./pages/MenuTable";
+import StolikiTable from "./pages/StolikiTable";
 
 
 export default function App() {
@@ -24,6 +26,8 @@ export default function App() {
             <Route path='/SampleMenu' element={<SampleMenu/>}/>
             <Route path='/AdminMenu' element={<AdminMenu/>}/>
             <Route path='/Tables' element={<Tables/>}/>
+            <Route path='/MenuTable' element={<MenuTable/>}/>
+            <Route path='/StolikiTable' element={<StolikiTable/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
