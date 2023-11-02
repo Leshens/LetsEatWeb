@@ -5,36 +5,42 @@ import '../Table.css'
 export default function MenuTable() {
     const [data, setData] = useState(Data)
     const [editState, setEditState] = useState(-1)
-    return ( 
-        <div className='tableWrap'>
-            <div>
-                <AddDish setData={setData}/>
-                <form onSubmit={handleUpdate}>
-                <table>
-                    <thead>
-                        <th>Nazwa</th>
-                        <th>Cena</th>
-                        <th>Zdjęcie</th>
-                        <th>Action</th>
-                    </thead>
-                {
-                    data.map((current) => (
-                        editState === current.id ? <EditDish current={current} data={data} setData={setData} /> :
-                        <tr>
-                            <td>{current.nazwa}</td>
-                            <td>{current.cena}</td>
-                            <td>{current.photo}</td>
-                            <td>
-                                <button type= 'button' className='edit' onClick={() => handleEdit(current.id)}>Edit</button>
-                                <button type= 'button' className='delete' onClick={() => handleDelete(current.id)}>Delete</button>
-                            </td>
-                        </tr>
+    return (
+        <div className='body'>
+            <h2>Panel administratora</h2>
+            <h3>Menu restauracji</h3> 
+            <div className='tableWrap'>
+                <div>
+                    <AddDish setData={setData}/>
+                    <form onSubmit={handleUpdate}>
+                    <table>
+                        <thead>
+                            <th>Nazwa</th>
+                            <th>Cena</th>
+                            <th>Zdjęcie</th>
+                            <th>Action</th>
+                        </thead>
+                    {
+                        data.map((current) => (
+                            editState === current.id ? <EditDish current={current} data={data} setData={setData} /> :
+                            <tr>
+                                <td>{current.nazwa}</td>
+                                <td>{current.cena}</td>
+                                <td><img src={current.photo} alt=""></img></td>
+                                <td>
+                                    <button type= 'button' className='edit' onClick={() => handleEdit(current.id)}>Edit</button>
+                                    <button type= 'button' className='delete' onClick={() => handleDelete(current.id)}>Delete</button>
+                                </td>
+                            </tr>
 
-                    ))
-                }
-                </table>
-                </form>
+                        ))
+                    }
+                    </table>
+                    </form>
+                </div>
             </div>
+            <a href="AdminMenu">Panel zarządzania danymi restauracji</a>
+            <a href="StolikiTable">Panel zarządzania stolikami</a>
         </div>
     )
 
