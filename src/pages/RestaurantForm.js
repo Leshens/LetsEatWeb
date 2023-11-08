@@ -21,7 +21,7 @@ export default function RestaurantForm() {
         { value: "healthy_cuisine", label: "Zdrowa kuchnia"},
     ]
     return (
-        <div className="restaurantForm">
+        <div className="restaurantForm flex flex-col items-center justify-center">
             <p>Wypełnij formularz poniżej, żeby zacząć z nami współpracować</p>
             <p>Krok 1/2</p>
             <Formik>
@@ -90,7 +90,9 @@ export default function RestaurantForm() {
                 className="form-control"
                />
                <br></br>
-               <a href="SampleMenu">Dalej</a>
+               <a href="SampleMenu">
+               <button type= "button" class="bg-primary text-black lg:px-12 md:px-10 sm:px-10 sx:px-10   lg:p-4 md:p-3 sm:p-3 sx:p-3   lg:text-xl md:text-lg sm:text-lg sx:text-lg rounded-full font-extrabold ">Dalej</button>
+               </a>
             </div>
             </Formik>
         </div>

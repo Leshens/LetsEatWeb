@@ -7,8 +7,8 @@ export default function MenuTable() {
     const [editState, setEditState] = useState(-1)
     return (
         <div className='body'>
-            <h2>Panel administratora</h2>
-            <h3>Menu restauracji</h3> 
+            <h2 className='text-center'>Panel administratora</h2>
+            <h3 className='text-center'>Menu restauracji</h3> 
             <div className='tableWrap'>
                 <div>
                     <AddDish setData={setData}/>

@@ -7,8 +7,11 @@ export default function AdminMenu() {
     const [editState, setEditState] = useState(-1)
     return ( 
         <div className='body'>
-            <h2>Panel administratora</h2>
-            <h3>Dane restauracji</h3>
+            {/* przerwa */}
+            <div className="h-10 w-10"></div>
+
+            <h2 className='text-center'>Panel administratora</h2>
+            <h3 className='text-center'>Dane restauracji</h3>
             <div className='tableWrap'>
                 <div>
                     <form onSubmit={handleUpdate}>
