@@ -1,0 +1,24 @@
+[debug] [2023-11-16T12:28:13.451Z] ----------------------------------------------------------------------
+[debug] [2023-11-16T12:28:13.453Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\kacpe\.vscode\LetsEatWeb\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2023-11-16T12:28:13.453Z] CLI Version:   12.9.1
+[debug] [2023-11-16T12:28:13.453Z] Platform:      win32
+[debug] [2023-11-16T12:28:13.453Z] Node Version:  v20.9.0
+[debug] [2023-11-16T12:28:13.453Z] Time:          Thu Nov 16 2023 13:28:13 GMT+0100 (czas środkowoeuropejski standardowy)
+[debug] [2023-11-16T12:28:13.453Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-11-16T12:28:13.488Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-11-16T12:28:13.488Z] > authorizing via signed-in user (kacper.kamm@gmail.com)
+[debug] [2023-11-16T12:28:13.488Z] [iam] checking project letseat-4d974 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-11-16T12:28:13.489Z] > refreshing access token with scopes: []
+[debug] [2023-11-16T12:28:13.490Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-11-16T12:28:13.490Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-11-16T12:28:13.667Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-11-16T12:28:13.667Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-11-16T12:28:13.672Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/letseat-4d974:testIamPermissions [none]
+[debug] [2023-11-16T12:28:13.672Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/letseat-4d974:testIamPermissions x-goog-quota-user=projects/letseat-4d974
+[debug] [2023-11-16T12:28:13.672Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/letseat-4d974:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-11-16T12:28:14.496Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/letseat-4d974:testIamPermissions 200
+[debug] [2023-11-16T12:28:14.496Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/letseat-4d974:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-11-16T12:28:14.497Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/letseat-4d974 [none]
+[debug] [2023-11-16T12:28:14.785Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/letseat-4d974 200
+[debug] [2023-11-16T12:28:14.785Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/letseat-4d974 {"projectId":"letseat-4d974","projectNumber":"988496219893","displayName":"LetsEat","name":"projects/letseat-4d974","resources":{"hostingSite":"letseat-4d974","storageBucket":"letseat-4d974.appspot.com","locationId":"europe-west"},"state":"ACTIVE","etag":"1_fb70cda3-c9e3-4153-8681-b3de532e4cd0"}
