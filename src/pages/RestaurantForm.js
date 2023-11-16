@@ -38,9 +38,15 @@ export default function RestaurantForm() {
                 </div>
                <br></br>
                <input
-                type="string"
-                name="hours"
-                placeholder="godzina otwarcia"
+                type="time"
+                name="hourStart"
+                placeholder="10:00"
+                className="form-control"
+               />
+               <input
+                type="time"
+                name="hourEnd"
+                placeholder="10:00"
                 className="form-control"
                />
                <br></br>
