@@ -6,16 +6,16 @@
 }
 
 table th, table td{
-    border: 1px solid black;
+    border: 1px solid rgb(108, 220, 187);
     text-align: center;
     padding: 2px 40px;
     font-size: larger;
     color: blue;
-    background-color: aquamarine;
+    background-color: gainsboro;
 }
 
 table th {
-    color: black;
+    color: gray;
 }
 
 table {
