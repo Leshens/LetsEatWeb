@@ -10,8 +10,29 @@ export default function AdminMenu() {
             {/* przerwa */}
             <div className="h-10 w-10"></div>
 
-            <h2 className='text-center'>Panel administratora</h2>
-            <h3 className='text-center'>Dane restauracji</h3>
+        <div className='flex flex-col items-center justify-center'>
+
+            <h2 className='text-center text-3xl text-secondary font-semibold'>Panel administratora</h2>
+
+            {/* przerwa */}
+            <div className="h-4 w-10"></div>
+
+            {/* Main text */}
+            <div className='inline-flex items-center justify-center'>
+            <div className="bg-primary h-three w-28 inline-flex order-1"></div>
+            {/* przerwa */}
+            <div className="h-10 w-8 inline-flex order-2"></div>
+                <h3 className='text-center text-3xl text-secondary font-semibold inline-flex order-3'>
+                Dane restauracji 
+                </h3>
+            {/* przerwa */}
+            <div className="h-10 w-8 inline-flex order-4"></div>
+            <div className="bg-primary h-three w-28 inline-flex order-5"></div>
+            </div>
+
+        </div>
+            
+
             <div className='tableWrap'>
                 <div>
                     <form onSubmit={handleUpdate}>
