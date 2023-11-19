@@ -4,19 +4,40 @@ import { Form, Formik } from "formik";
 //import * as Yup from "yup";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {LogInContext} from '../context/LogInContext'
 import {loginSchema} from '../schemas/loginSchema'
+import { auth } from '../firebase';
+import { signInWithEmailAndPassword } from "firebase/auth";
 
-export default function Login() {
-  const {setUserName} = useContext(LogInContext);
-  const {setIsLogged} = useContext(LogInContext);
-  const {setIsAdmin} = useContext(LogInContext);
+const Login = () =>{
+  const initialValues={
+    email: "",
+    password: ""
+  }
+  const[email,setEmail] = useState('');
+  const[password,setPassword] = useState('');
   const navigate = useNavigate();
-const initialValues={
-  email: "",
-  password: ""
-}
+  // const handleSubmit= async (e) =>{
+  //   e.preventDefault();
+  //   try {
+  //     const userCredendials = await signInWithEmailAndPassword(auth,email,password);
+  //     const user = userCredendials.user;
+  //     localStorage.setItem('token', user.accessToken)
+  //     localStorage.setItem('user', JSON.stringify(user))
+  //     navigate("/orders");
+  //   } catch(error){
+  //     if (error.response) {
+  //         console.log(error.response);
+  //         //resetForm();
+  //         alert("Username or login is invalid")
+  //     } else if (error.request) {
+  //         console.log("network error");
+  //     } else {
+  //         console.log(error);
+  //     }
+  //   }
+  // }
 
   return (
     <div className="login">
@@ -24,31 +45,6 @@ const initialValues={
           validationSchema={loginSchema}
           initialValues={initialValues}
           onSubmit={async (values, { resetForm }) => {
-            await axios.get(`http://localhost:8080/${values.email}`)
-                .then((response) => {
-                      if(response.data.password !== values.password){
-                        resetForm();
-                        alert("Username or login is invalid");
-                      }
-                      else{
-                        setUserName(response.data.firstName);
-                        setIsLogged(true);
-                        console.log(response.data.admin)
-                        setIsAdmin(response.data.admin)
-                        navigate("/orders");
-                      }
-                })
-                .catch((error) => {
-                    if (error.response) {
-                        console.log(error.response);
-                        resetForm();
-                        alert("Username or login is invalid")
-                    } else if (error.request) {
-                        console.log("network error");
-                    } else {
-                        console.log(error);
-                    }
-                });
           }}
       >
           { (
@@ -59,7 +55,26 @@ const initialValues={
                 isSubmitting,
                 handleChange,
                 handleBlur,
-                handleSubmit,
+                handleSubmit= async (e) =>{
+                    e.preventDefault();
+                    try {
+                      const userCredendials = await signInWithEmailAndPassword(auth,email,password);
+                      const user = userCredendials.user;
+                      localStorage.setItem('token', user.accessToken)
+                      localStorage.setItem('user', JSON.stringify(user))
+                      navigate("/orders");
+                    } catch(error){
+                      if (error.response) {
+                          console.log(error.response);
+                          //resetForm();
+                          alert("Username or login is invalid")
+                      } else if (error.request) {
+                          console.log("network error");
+                      } else {
+                          console.log(error);
+                      }
+                    }
+                  },
                 resetForm
               }
             ) => (
@@ -130,5 +145,5 @@ const initialValues={
     </div>
   );
 }
-
+export default Login;
 /*<button //disabled={isSubmitting}type="submit"></button>*/

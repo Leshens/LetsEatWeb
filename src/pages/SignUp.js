@@ -2,21 +2,23 @@ import '../App.css';
 import logo from '../img/logoLE2.png';
 import { Form, Formik } from "formik";
 //import * as Yup from "yup";
-import axios from 'axios';
+//import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import {useContext} from "react";
-import {LogInContext} from '../context/LogInContext'
+import {useContext, useState} from "react";
 import {loginSchema} from '../schemas/loginSchema'
+import { auth } from '../firebase';
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
-export default function SignUp() {
-  const {setUserName} = useContext(LogInContext);
-  const {setIsLogged} = useContext(LogInContext);
-  const {setIsAdmin} = useContext(LogInContext);
+
+
+const SignUp = () =>{
+  const initialValues={
+    email: "",
+    password: ""
+  }
+  const[email,setEmail] = useState('');
+  const[password,setPassword] = useState('');
   const navigate = useNavigate();
-const initialValues={
-  email: "",
-  password: ""
-}
 
   return (
     <div className="SignUp">
@@ -24,31 +26,21 @@ const initialValues={
           validationSchema={loginSchema}
           initialValues={initialValues}
           onSubmit={async (values, { resetForm }) => {
-            await axios.get(`http://localhost:8080/${values.email}`)
-                .then((response) => {
-                      if(response.data.password !== values.password){
-                        resetForm();
-                        alert("Username or login is invalid");
-                      }
-                      else{
-                        setUserName(response.data.firstName);
-                        setIsLogged(true);
-                        console.log(response.data.admin)
-                        setIsAdmin(response.data.admin)
-                        navigate("/RestaurantForm");
-                      }
-                })
-                .catch((error) => {
-                    if (error.response) {
-                        console.log(error.response);
-                        resetForm();
-                        alert("Username or login is invalid")
-                    } else if (error.request) {
-                        console.log("network error");
-                    } else {
-                        console.log(error);
-                    }
-                });
+            // try {
+            //   let ref1 = Firebase.database().ref().child('users').push()
+            //   ref1.set(values)
+            // } catch (error) {
+            //   if (error.response) {
+            //     console.log(error.response);
+            //     resetForm();
+            //     alert("Username or login is invalid")
+            //   } else if (error.request) {
+            //       console.log("network error");
+            //   } else {
+            //       console.log(error);
+            //   }
+            // }
+
           }}
       >
           { (
@@ -59,7 +51,17 @@ const initialValues={
                 isSubmitting,
                 handleChange,
                 handleBlur,
-                handleSubmit,
+                handleSubmit= async (e) =>{
+                  e.preventDefault();
+                  try {
+                    const userCredendials = await createUserWithEmailAndPassword(auth,email,password);
+                    const user = userCredendials.user;
+                    localStorage.setItem('token', user.accessToken)
+                    localStorage.setItem('user', JSON.stringify(user))
+                  } catch (error){
+                      console.log(error)
+                    }  
+                },
                 resetForm
               }
             ) => (
@@ -133,5 +135,5 @@ const initialValues={
     </div>
   );
 }
-
+export default SignUp;
 /*<button disabled={isSubmitting} type="submit"></button>*/
