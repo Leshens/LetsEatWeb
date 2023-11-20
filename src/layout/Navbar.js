@@ -4,6 +4,7 @@ import { signOut } from "firebase/auth";
 
 const Navbar = () => {
 const navigate = useNavigate();
+const user = JSON.parse(localStorage.getItem('user'));
 const handleLogOut = async () =>{
   signOut(auth).then(() => {
     // Sign-out successful.
@@ -11,7 +12,9 @@ const handleLogOut = async () =>{
     localStorage.removeItem('user');
     navigate("/");
   }).catch((error) => {
-    // An error happened.
+    console.error(error);
+    console.log(error.code);
+    console.log(error.message);
   });
 
   }
@@ -28,6 +31,8 @@ const handleLogOut = async () =>{
               <Link to="/StolikiTable"> Panel zarządzania stolikami </Link>
 
               <button onClick={handleLogOut}>LogOut</button>
+
+              <h2>{user && user.email}</h2>
             
         </nav>
       </div>
