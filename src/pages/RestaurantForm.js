@@ -1,3 +1,5 @@
+import '../App.css';
+import logo from '../img/logoLE2.png';
 import { Formik } from "formik";
 import Dropdown from "./Dropdown"; 
 
@@ -22,10 +24,37 @@ export default function RestaurantForm() {
     ]
     return (
         <div className="restaurantForm flex flex-col items-center justify-center">
-            <p>Wypełnij formularz poniżej, żeby zacząć z nami współpracować</p>
-            <p>Krok 1/2</p>
+
+            {/* przerwa */}
+            <div className="h-10 w-10"></div>
+
+            <p className="text-3xl text-secondary font-semibold text-center">
+                Wypełnij formularz poniżej, żeby zacząć z nami współpracować
+            </p>
+
+            {/* logo */}
+            <a href="/">
+            <img src={logo} className="lg:h-36 md:h-28 sm:h-20 sx:h-16 top-4 left-4 absolute" alt="logo" />
+            </a>
+
+            {/* przerwa */}
+            <div className="h-10 w-10"></div>
+
+            <p className="rounded-full bg-lightSecondary px-12 text-center font-semibold text-primary text-xl">
+                Krok 1/2
+            </p>
+
+            {/* przerwa */}
+            <div className="h-4 w-10"></div>
+
+        <div className="border-primary border-2 rounded-3xl px-12 flex">
             <Formik>
+
             <div className="form">
+
+                {/* przerwa */}
+               <div className="h-2 w-10"></div>
+
                <input
                 type="string"
                 name="restaurant-name"
@@ -33,14 +62,20 @@ export default function RestaurantForm() {
                 className="form-control"
                />
                <br></br>
-               <div className="Dropdown">
+               <div className="Dropdown text-secondary">
                     <Dropdown isMulti placeHolder="Wybierz Rodzaj Restauracji..." options={options} />
                 </div>
                <br></br>
                <input
-                type="string"
-                name="hours"
-                placeholder="godzina otwarcia"
+                type="time"
+                name="hourStart"
+                placeholder="10:00"
+                className="form-control"
+               />
+               <input
+                type="time"
+                name="hourEnd"
+                placeholder="10:00"
                 className="form-control"
                />
                <br></br>
@@ -58,7 +93,7 @@ export default function RestaurantForm() {
                 className="form-control"
                />
                <br></br>
-               <label>Ilość stolików 2-osobowych:</label>
+               <label className="text-secondary">Ilość stolików 2-osobowych:</label>
                <input
                 type="number"
                 name="2p table"
@@ -66,7 +101,11 @@ export default function RestaurantForm() {
                 className="form-control"
                />
                <br></br>
-               <label>Ilość stolików 4-osobowych:</label>
+
+                {/* przerwa */}
+               <div className="h-2 w-10"></div>
+
+               <label className="text-secondary">Ilość stolików 4-osobowych:</label>
                <input
                 type="number"
                 name="4p table"
@@ -74,7 +113,11 @@ export default function RestaurantForm() {
                 className="form-control"
                />
                <br></br>
-               <label>Ilość stolików 6-osobowych:</label>
+
+                {/* przerwa */}
+               <div className="h-2 w-10"></div>
+
+               <label className="text-secondary">Ilość stolików 6-osobowych:</label>
                <input
                 type="number"
                 name="6p table"
@@ -82,7 +125,11 @@ export default function RestaurantForm() {
                 className="form-control"
                />
                <br></br>
-               <label>Ilość stolików 8-osobowych:</label>
+
+               {/* przerwa */}
+               <div className="h-2 w-10"></div>
+
+               <label className="text-secondary">Ilość stolików 8-osobowych:</label>
                <input
                 type="number"
                 name="8p table"
@@ -90,12 +137,26 @@ export default function RestaurantForm() {
                 className="form-control"
                />
                <br></br>
+
+                {/* przerwa */}
+                <div className="h-10 w-10"></div>
+
                <a href="SampleMenu">
                <button type= "button" class="bg-primary text-black lg:px-12 md:px-10 sm:px-10 sx:px-10   lg:p-4 md:p-3 sm:p-3 sx:p-3   lg:text-xl md:text-lg sm:text-lg sx:text-lg rounded-full font-extrabold ">Dalej</button>
                </a>
+
+               {/* przerwa */}
+                <div className="h-11 w-10"></div>
+
             </div>
             </Formik>
+
         </div>
+
+        {/* przerwa */}
+        <div className="h-20 w-10"></div>
+    
+    </div>
     )
   };
   

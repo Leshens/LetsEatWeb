@@ -111,8 +111,7 @@ const initialValues={
                           <br></br>
 
                           {/* przerwa */}
-                          <div className="h-10 w-10">
-                          </div>
+                          <div className="h-10 w-10"></div>
 
                           <a href="RestaurantForm">
                           <button type= "button" class="bg-primary text-black lg:px-12 md:px-10 sm:px-10 sx:px-10   lg:p-4 md:p-3 sm:p-3 sx:p-3   lg:text-xl md:text-lg sm:text-lg sx:text-lg rounded-full font-extrabold ">ZAREJESTRUJ SIE</button>
