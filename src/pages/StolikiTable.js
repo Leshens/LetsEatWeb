@@ -33,29 +33,29 @@ export default function StolikiTable() {
 
         </div>
 
-            <div className='tableWrap'>
+            <div className='tableWrap flex items-center justify-center h-screen'>
                 <div>
                     <form onSubmit={handleUpdate}>
-                    <table>
-                        <thead>
-                            <th>Nazwa</th>
-                            <th>2os</th>
-                            <th>4os</th>
-                            <th>6os</th>
-                            <th>8os</th>
-                            <th>Action</th>
+                    <table className='border-primary border-b-2 border-collapse text-2xl text-center shadow-md'>
+                        <thead className='text-secondary border-primary border-b-2'>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">Nazwa</th>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">2os</th>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">4os</th>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">6os</th>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">8os</th>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">Action</th>
                         </thead>
                     {
                         data.map((current) => (
                             editState === current.id ? <EditStolik current={current} data={data} setData={setData} /> :
                             <tr>
-                                <td>{current.nazwa}</td>
-                                <td>{current.twoSeater}</td>
-                                <td>{current.fourSeater}</td>
-                                <td>{current.sixSeater}</td>
-                                <td>{current.eightSeater}</td>
-                                <td>
-                                    <button type= 'button' className='edit' onClick={() => handleEdit(current.id)}>Edit</button>
+                                <td class="px-6 py-4 bg-lightSecondary">{current.nazwa}</td>
+                                <td class="px-6 py-4 bg-lightSecondary">{current.twoSeater}</td>
+                                <td class="px-6 py-4 bg-lightSecondary">{current.fourSeater}</td>
+                                <td class="px-6 py-4 bg-lightSecondary">{current.sixSeater}</td>
+                                <td class="px-6 py-4 bg-lightSecondary">{current.eightSeater}</td>
+                                <td class="px-6 py-4 bg-lightSecondary">
+                                    <button type= 'button' className='edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2' onClick={() => handleEdit(current.id)}>Edit</button>
                                 </td>
                             </tr>
 
@@ -119,13 +119,13 @@ export default function StolikiTable() {
             setData(updatedData)
         }
     return(
-        <tr>
-            <td><input type="text" onChange={handleNazwa} value={current.nazwa} name="nazwa" placeholder="Wpisz nazwę"/></td>
-            <td><input type="number" onChange={handleTwoSeater} value={current.twoSeater} name="twoSeater" placeholder="Podaj ilość dwu-osobowych stolików" /></td>
-            <td><input type="number" onChange={handleFourSeater} value={current.fourSeater} name="fourSeater" placeholder="Podaj ilość cztero-osobowych stolików " /></td>
-            <td><input type="number" onChange={handleSixSeater} value={current.sixSeater} name="sixSeater" placeholder="Podaj ilość sześcio-osobowych stolików" /></td>
-            <td><input type="number" onChange={handleEightseater} value={current.eightSeater} name="eightSeater" placeholder="Podaj ośmio-osobowych stolików" /></td>
-            <td><button type='submit'>Update</button></td>
+        <tr className='bg-green-100'>
+            <td><input type="text" className="w-20 py-4 bg-green-100" onChange={handleNazwa} value={current.nazwa} name="nazwa" placeholder="Wpisz nazwę"/></td>
+            <td><input type="number" className="w-20 py-4 bg-green-100" onChange={handleTwoSeater} value={current.twoSeater} name="twoSeater" placeholder="Podaj ilość dwu-osobowych stolików" /></td>
+            <td><input type="number" className="w-20 py-4 bg-green-100" onChange={handleFourSeater} value={current.fourSeater} name="fourSeater" placeholder="Podaj ilość cztero-osobowych stolików " /></td>
+            <td><input type="number" className="w-20 py-4 bg-green-100" onChange={handleSixSeater} value={current.sixSeater} name="sixSeater" placeholder="Podaj ilość sześcio-osobowych stolików" /></td>
+            <td><input type="number" className="w-20 py-4 bg-green-100" onChange={handleEightseater} value={current.eightSeater} name="eightSeater" placeholder="Podaj ośmio-osobowych stolików" /></td>
+            <td><button type='submit' className='text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2'>Update</button></td>
         </tr>
     )
   }

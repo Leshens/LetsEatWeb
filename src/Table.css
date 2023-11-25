@@ -1,26 +1,26 @@
-.tableWrap {
+/* .tableWrap {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
-table th, table td{
+/* table th, table td{
     border: 1px solid rgb(108, 220, 187);
     text-align: center;
     padding: 2px 40px;
     font-size: larger;
     color: blue;
     background-color: gainsboro;
-}
+} */
 
-table th {
+/* table th {
     color: gray;
-}
+} */
 
-table {
+/* table {
     border-collapse: collapse;
-}
+} */
 
 input {
     padding: 5px;
@@ -39,14 +39,14 @@ input {
     background-color: rgb(7,62, 7);
 }
 
-.edit, .delete{
+/* .edit, .delete{
     border: none;
     padding: 7px;
     border-radius: 5px;
     cursor: pointer;
-}
+} */
 
-.edit {
+/* .edit {
     color: white;
     margin-right: 5px;
     background-color: blue;
@@ -54,7 +54,7 @@ input {
 
 .edit:hover {
     background-color: rgb(7, 7, 72);
-}
+} */
 
 .delete {
     color: white;
