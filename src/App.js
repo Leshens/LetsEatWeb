@@ -11,9 +11,7 @@ import Tables from "./pages/Tables";
 import MenuTable from "./pages/MenuTable";
 import StolikiTable from "./pages/StolikiTable";
 
-
 export default function App() {
-  
   return (
     <div className="App">
       <BrowserRouter>
