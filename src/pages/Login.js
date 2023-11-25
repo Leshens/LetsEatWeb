@@ -24,7 +24,7 @@ const initialValues={
           validationSchema={loginSchema}
           initialValues={initialValues}
           onSubmit={async (values, { resetForm }) => {
-            await axios.get(`http://localhost:8080/${values.email}`)
+            await axios.get(`http://localhost:3000/${values.email}`)
                 .then((response) => {
                       if(response.data.password !== values.password){
                         resetForm();
@@ -35,7 +35,7 @@ const initialValues={
                         setIsLogged(true);
                         console.log(response.data.admin)
                         setIsAdmin(response.data.admin)
-                        navigate("/orders");
+                        navigate("/AdminMenu");
                       }
                 })
                 .catch((error) => {
@@ -118,7 +118,8 @@ const initialValues={
                           </div>
 
                           <a href="AdminMenu">
-                          <button type= "button" class="bg-primary text-black lg:px-12 md:px-10 sm:px-10 sx:px-10   lg:p-4 md:p-3 sm:p-3 sx:p-3   lg:text-xl md:text-lg sm:text-lg sx:text-lg rounded-full font-extrabold ">ZALOGUJ SIE</button>
+                          {/* <button type= "button" class="bg-primary text-black lg:px-12 md:px-10 sm:px-10 sx:px-10   lg:p-4 md:p-3 sm:p-3 sx:p-3   lg:text-xl md:text-lg sm:text-lg sx:text-lg rounded-full font-extrabold ">ZALOGUJ SIE</button> */}
+                          <button disabled={isSubmitting}type="submit" class="bg-primary text-black lg:px-12 md:px-10 sm:px-10 sx:px-10   lg:p-4 md:p-3 sm:p-3 sx:p-3   lg:text-xl md:text-lg sm:text-lg sx:text-lg rounded-full font-extrabold ">ZALOGUJ SIĘ</button>
                           </a>
                           
                         </Form>
