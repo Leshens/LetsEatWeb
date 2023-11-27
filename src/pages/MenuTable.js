@@ -6,11 +6,11 @@ export default function MenuTable() {
     const [data, setData] = useState(Data)
     const [editState, setEditState] = useState(-1)
     return (
-        <div className='body'>
+        <div className='body flex flex-col items-center justify-center'>
             {/* przerwa */}
             <div className="h-10 w-10"></div>
 
-        <div className='flex flex-col items-center justify-center'>
+        <div className='flex flex-col items-center justify-center order-1'>
 
             <h2 className='text-center text-3xl text-secondary font-semibold'>Panel administratora</h2>
 
@@ -30,41 +30,47 @@ export default function MenuTable() {
             <div className="bg-primary h-three w-28 inline-flex order-5"></div>
             </div>
 
+            {/* przerwa */}
+            <div className="h-10 w-10"></div>
+
         </div>
 
 
-            <div className='tableWrap'>
+            <div className='tableWrap flex items-center justify-center h-screen order-3'>
                 <div>
                     <AddDish setData={setData}/>
                     <form onSubmit={handleUpdate}>
-                    <table>
-                        <thead>
-                            <th>Nazwa</th>
-                            <th>Cena</th>
-                            <th>Zdjęcie</th>
-                            <th>Action</th>
+                    <table className='border-primary border-b-2 border-collapse text-2xl text-center shadow-md'>
+                        <thead className='text-secondary border-primary border-b-2'>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">Nazwa</th>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">Cena</th>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">Zdjęcie</th>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">Action</th>
                         </thead>
                     {
                         data.map((current) => (
                             editState === current.id ? <EditDish current={current} data={data} setData={setData} /> :
                             <tr>
-                                <td>{current.nazwa}</td>
-                                <td>{current.cena}</td>
-                                <td><img src={current.photo} alt=""></img></td>
-                                <td>
-                                    <button type= 'button' className='edit' onClick={() => handleEdit(current.id)}>Edit</button>
-                                    <button type= 'button' className='delete' onClick={() => handleDelete(current.id)}>Delete</button>
+                                <td class="px-6 py-4 bg-lightSecondary">{current.nazwa}</td>
+                                <td class="px-6 py-4 bg-lightSecondary">{current.cena}</td>
+                                <td class="px-6 py-4 bg-lightSecondary"><img src={current.photo} alt=""></img></td>
+                                <td class="px-6 py-4 bg-lightSecondary">
+                                    <button type= 'button' className='edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2' onClick={() => handleEdit(current.id)}>Edit</button>
+                                    <button type= 'button' className='delete text-white hover:text-primary bg-red-500 hover:bg-pink-900 rounded-full px-4 py-2' onClick={() => handleDelete(current.id)}>Delete</button>
                                 </td>
                             </tr>
 
                         ))
                     }
                     </table>
+
+                    {/* przerwa */}
+                    <div className="h-10 w-10"></div>
+
                     </form>
                 </div>
             </div>
-            <a href="AdminMenu">Panel zarządzania danymi restauracji</a>
-            <a href="StolikiTable">Panel zarządzania stolikami</a>
+    
         </div>
     )
 
@@ -109,11 +115,11 @@ export default function MenuTable() {
         }
 
     return(
-        <tr>
-            <td><input type="text" onChange={handleNazwa} value={current.nazwa} name="nazwa" placeholder="Wpisz nazwę"/></td>
-            <td><input type="text" onChange={handleCena} value={current.cena} name="cena" placeholder="Wpisz cenę" /></td>
-            <td><input type="text" onChange={handlePhoto} value={current.photo} name="photo" placeholder="Wyślij zdjęcie" /></td>
-            <td><button type='submit'>Update</button></td>
+        <tr className='bg-green-100'>
+            <td><input type="text" className="w-52 py-4 bg-green-100" onChange={handleNazwa} value={current.nazwa} name="nazwa" placeholder="Wpisz nazwę"/></td>
+            <td><input type="text" className="w-24 py-4 bg-green-100" onChange={handleCena} value={current.cena} name="cena" placeholder="Wpisz cenę" /></td>
+            <td><input type="text" className="w-64 py-4 bg-green-100" onChange={handlePhoto} value={current.photo} name="photo" placeholder="Wyślij zdjęcie" /></td>
+            <td><button type='submit' className='edit text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2'>Update</button></td>
         </tr>
     )
   }
@@ -140,11 +146,19 @@ export default function MenuTable() {
         photoRef.current.value = ""
     }
     return(
-        <form className='addForm' onSubmit={handleValues}>
-            <input type="text" name="nazwa" placeholder="Wpisz nazwę" ref={nazwaRef}/>
-            <input type="text" name="cena" placeholder="Podaj cenę" ref={cenaRef}/>
-            <input type="text" name="photo" placeholder="Dodaj zdjęcie" ref={photoRef}/>
-            <button>Add</button>
+        <form className='addForm flex flex-row items-center justify-center order-2' onSubmit={handleValues}>
+
+            {/* przerwa */}
+            <div className="h-10 w-10"></div>
+
+            <input type="text" className="w-40 text-center" name="nazwa" placeholder="Wpisz nazwę" ref={nazwaRef}/>
+            <input type="text" className="w-24 text-center" name="cena" placeholder="Podaj cenę" ref={cenaRef}/>
+            <input type="text" className="w-40 text-center" name="photo" placeholder="Dodaj zdjęcie" ref={photoRef}/>
+            <button className='add text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2'>Add</button>
+
+            {/* przerwa */}
+            <div className="h-10 w-10"></div>
+
         </form>
     )
   }

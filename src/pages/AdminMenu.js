@@ -33,29 +33,29 @@ export default function AdminMenu() {
         </div>
             
 
-            <div className='tableWrap'>
+            <div className='tableWrap flex items-center justify-center h-screen'>
                 <div>
                     <form onSubmit={handleUpdate}>
-                    <table>
-                        <thead>
-                            <th>Nazwa</th>
-                            <th>Rodzaj</th>
-                            <th>Godziny Otwarcia</th>
-                            <th>Adres</th>
-                            <th>Telefon</th>
-                            <th>Action</th>
+                    <table className='border-primary border-b-2 border-collapse text-2xl text-center shadow-md'>
+                        <thead className='text-secondary border-primary border-b-2'>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">Nazwa</th>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">Rodzaj</th>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">Godziny<br></br>Otwarcia</th>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">Adres</th>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">Telefon</th>
+                            <th scope="col" class="px-6 py-4 bg-inBetween">Action</th>
                         </thead>
                     {
                         data.map((current) => (
                             editState === current.id ? <EditRestaurant current={current} data={data} setData={setData} /> :
-                            <tr>
-                                <td>{current.nazwa}</td>
-                                <td>{current.rodzaj}</td>
-                                <td>{current.hours}</td>
-                                <td>{current.adres}</td>
-                                <td>{current.telefon}</td>
-                                <td>
-                                    <button type= 'button' className='edit' onClick={() => handleEdit(current.id)}>Edit</button>
+                            <tr className=''>
+                                <td class="px-6 py-4 bg-lightSecondary">{current.nazwa}</td>
+                                <td class="px-6 py-4 bg-lightSecondary">{current.rodzaj}</td>
+                                <td class="px-6 py-4 bg-lightSecondary">{current.hours}</td>
+                                <td class="px-6 py-4 bg-lightSecondary">{current.adres}</td>
+                                <td class="px-6 py-4 bg-lightSecondary">{current.telefon}</td>
+                                <td class="px-6 py-4 bg-lightSecondary">
+                                    <button type= 'button' className='edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2' onClick={() => handleEdit(current.id)}>Edit</button>
                                 </td>
                             </tr>
 
@@ -119,13 +119,13 @@ export default function AdminMenu() {
             setData(updatedData)
         }
     return(
-        <tr>
-            <td><input type="text" onChange={handleNazwa} value={current.nazwa} name="nazwa" placeholder="Wpisz nazwę"/></td>
-            <td><input type="text" onChange={handleRodzaj} value={current.rodzaj} name="rodzaj" placeholder="Wpisz rodzaj restauracji" /></td>
-            <td><input type="text" onChange={handleHours} value={current.hours} name="hours" placeholder="Podaj godziny otwarcia" /></td>
-            <td><input type="text" onChange={handleAdres} value={current.adres} name="adres" placeholder="Podaj adres" /></td>
-            <td><input type="text" onChange={handleTelefon} value={current.telefon} name="telefon" placeholder="Podaj telefon" /></td>
-            <td><button type='submit'>Update</button></td>
+        <tr className='bg-green-100'>
+            <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleNazwa} value={current.nazwa} name="nazwa" placeholder="Wpisz nazwę"/></td>
+            <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleRodzaj} value={current.rodzaj} name="rodzaj" placeholder="Wpisz rodzaj restauracji" /></td>
+            <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleHours} value={current.hours} name="hours" placeholder="Podaj godziny otwarcia" /></td>
+            <td><input type="text" className="w-40 py-4 bg-green-100 " onChange={handleAdres} value={current.adres} name="adres" placeholder="Podaj adres" /></td>
+            <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleTelefon} value={current.telefon} name="telefon" placeholder="Podaj telefon" /></td>
+            <td><button type='submit' className='edit text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2'>Update</button></td>
         </tr>
     )
   }

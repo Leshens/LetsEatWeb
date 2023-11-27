@@ -52,8 +52,8 @@ export default function RestaurantForm() {
 
             <div className="form">
 
-                {/* przerwa */}
-               <div className="h-2 w-10"></div>
+            {/* przerwa */}
+            <div className="h-8 w-10"></div>
 
                <input
                 type="string"
@@ -65,7 +65,7 @@ export default function RestaurantForm() {
                <div className="Dropdown text-secondary">
                     <Dropdown isMulti placeHolder="Wybierz Rodzaj Restauracji..." options={options} />
                 </div>
-               <br></br>
+        
                <input
                 type="time"
                 name="hourStart"
@@ -93,48 +93,48 @@ export default function RestaurantForm() {
                 className="form-control"
                />
                <br></br>
-               <label className="text-secondary">Ilość stolików 2-osobowych:</label>
+               <label className="">Ilość stolików 2-osobowych: </label>
                <input
                 type="number"
                 name="2p table"
                 placeholder="0"
-                className="form-control"
+                className="form-control w-12"
                />
                <br></br>
 
                 {/* przerwa */}
                <div className="h-2 w-10"></div>
 
-               <label className="text-secondary">Ilość stolików 4-osobowych:</label>
+               <label className="">Ilość stolików 4-osobowych: </label>
                <input
                 type="number"
                 name="4p table"
                 placeholder="0"
-                className="form-control"
+                className="form-control w-12"
                />
                <br></br>
 
                 {/* przerwa */}
                <div className="h-2 w-10"></div>
 
-               <label className="text-secondary">Ilość stolików 6-osobowych:</label>
-               <input
+               <label className="">Ilość stolików 6-osobowych: </label>
+               <input 
                 type="number"
                 name="6p table"
                 placeholder="0"
-                className="form-control"
+                className="form-control w-12"
                />
                <br></br>
 
                {/* przerwa */}
                <div className="h-2 w-10"></div>
 
-               <label className="text-secondary">Ilość stolików 8-osobowych:</label>
+               <label className="">Ilość stolików 8-osobowych: </label>
                <input
                 type="number"
                 name="8p table"
                 placeholder="0"
-                className="form-control"
+                className="form-control w-12"
                />
                <br></br>
 

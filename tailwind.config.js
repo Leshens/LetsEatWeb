@@ -11,12 +11,16 @@ module.exports = {
       screens: {
         'sx': '200px',
       },
+      colors:{
+        primary: '#6cdcbb',
+        secondary: '#939393',
+        lightSecondary: '#EBE9EB',
+        evenLighterSecondary: '#F1F5F9',
+        inBetween: '#D4D4D4'
+      },
+      
     },
-    colors:{
-      primary: '#6cdcbb',
-      secondary: '#939393',
-      lightSecondary: '#EBE9EB'
-    },
+    
   },
   plugins: [],
 }
