@@ -53,7 +53,7 @@ export default function MenuTable() {
                             <tr>
                                 <td class="px-6 py-4 bg-lightSecondary">{current.nazwa}</td>
                                 <td class="px-6 py-4 bg-lightSecondary">{current.cena}</td>
-                                <td class="px-6 py-4 bg-lightSecondary"><img src={current.photo} alt=""></img></td>
+                                <td class="px-6 py-4 bg-lightSecondary"><img src={current.photo} alt="" className='h-32'></img></td>
                                 <td class="px-6 py-4 bg-lightSecondary">
                                     <button type= 'button' className='edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2' onClick={() => handleEdit(current.id)}>Edit</button>
                                     <button type= 'button' className='delete text-white hover:text-primary bg-red-500 hover:bg-pink-900 rounded-full px-4 py-2' onClick={() => handleDelete(current.id)}>Delete</button>
@@ -154,8 +154,9 @@ export default function MenuTable() {
             <input type="text" className="w-40 text-center" name="nazwa" placeholder="Wpisz nazwę" ref={nazwaRef}/>
             <input type="text" className="w-24 text-center" name="cena" placeholder="Podaj cenę" ref={cenaRef}/>
             <input type="text" className="w-40 text-center" name="photo" placeholder="Dodaj zdjęcie" ref={photoRef}/>
-            <button className='add text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2'>Add</button>
+            <button className='add text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-6 py-2'>Add</button>
 
+            
             {/* przerwa */}
             <div className="h-10 w-10"></div>
 
