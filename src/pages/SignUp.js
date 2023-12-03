@@ -2,16 +2,13 @@ import '../App.css';
 import logo from '../img/logoLE2.png';
 import signgoogle from '../img/signWITHgoogle.png';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { loginSchema } from '../schemas/loginSchema';
 
 const Signup = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (values) => {
