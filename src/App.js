@@ -9,6 +9,7 @@ import SampleMenu from "./pages/SampleMenu";
 import AdminMenu from "./pages/AdminMenu"
 import Tables from "./pages/Tables";
 import MenuTable from "./pages/MenuTable";
+import Protected from "./components/Protected";
 import StolikiTable from "./pages/StolikiTable";
 
 export default function App() {
@@ -16,16 +17,17 @@ export default function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navbar />}>
-            <Route path="/" element={<Home/>}/>
-            <Route path='/Login' element={<Login/>}/>
-            <Route path='/SignUp' element={<SignUp/>}/>
-            <Route path='/RestaurantForm' element={<RestaurantForm/>}/>
-            <Route path='/SampleMenu' element={<SampleMenu/>}/>
-            <Route path='/AdminMenu' element={<AdminMenu/>}/>
-            <Route path='/Tables' element={<Tables/>}/>
-            <Route path='/MenuTable' element={<MenuTable/>}/>
-            <Route path='/StolikiTable' element={<StolikiTable/>}/>
+        <Route path="/" element={<Home/>}/>
+        <Route path='/Login' element={<Login/>}/>
+        <Route path='/SignUp' element={<SignUp/>}/>
+          <Route path="/" element={<Protected/>}>
+              <Route path='/' element={<Navbar />}/>
+              <Route path='/RestaurantForm' element={<RestaurantForm/>}/>
+              <Route path='/SampleMenu' element={<SampleMenu/>}/>
+              <Route path='/AdminMenu' element={<AdminMenu/>}/>
+              <Route path='/Tables' element={<Tables/>}/>
+              <Route path='/MenuTable' element={<MenuTable/>}/>
+              <Route path='/StolikiTable' element={<StolikiTable/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
