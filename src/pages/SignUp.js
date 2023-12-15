@@ -31,7 +31,7 @@ const Signup = () => {
       const user = userCredential.user;
       localStorage.setItem('token', user.accessToken);
       localStorage.setItem('user', JSON.stringify(user));
-      navigate('/AdminMenu');
+      navigate('/RestaurantForm');
     } catch (error) {
       console.error(error);
       console.log(error.code);
