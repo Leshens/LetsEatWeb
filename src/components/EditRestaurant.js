@@ -1,70 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-export default function EditRestaurant({ current, index, onSubmit }) {
-  const [editedData, setEditedData] = useState({ ...current });
-
-  useEffect(() => {
-    setEditedData({ ...current });
-  }, [current]);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setEditedData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+const EditRestaurant = ({ current, index, onEditSubmit, onInputChange }) => {
+  const handleChange = (event, field) => {
+    onInputChange(field, event.target.value);
   };
-
-  const handleUpdate = () => {
-    setEditedData((prevData) => {
-      // Use the callback function to ensure the state is updated
-      const updatedData = { ...prevData };
-      onSubmit(index, updatedData);
-      console.log(updatedData);
-      return updatedData;
-    });
-  };
-  
 
   return (
-    <tr className="bg-green-100">
-      <td>
+    <tr className="">
+      <td className="px-6 py-4 bg-lightSecondary">
         <input
           type="text"
-          className="w-40 py-4 bg-green-100"
-          onChange={handleInputChange}
-          value={editedData.restaurantName}
-          name="restaurantName"
-          placeholder="Wpisz nazwę"
+          value={current.restaurantName}
+          onChange={(e) => handleChange(e, 'restaurantName')}
         />
       </td>
-      <td>
+      <td className="px-6 py-4 bg-lightSecondary">
         <input
           type="text"
-          className="w-40 py-4 bg-green-100"
-          onChange={handleInputChange}
-          value={editedData.restaurantCategory}
-          name="restaurantCategory"
-          placeholder="Wpisz rodzaj restauracji"
+          value={current.restaurantCategory}
+          onChange={(e) => handleChange(e, 'restaurantCategory')}
         />
       </td>
-      <input
-        type="text"
-        className="w-40 py-4 bg-green-100"
-        onChange={handleInputChange}
-        value={editedData.location}
-        name="location"
-        placeholder="Wpisz adres restauracji"
-      />
-      <td>
+      <td className="px-6 py-4 bg-lightSecondary">
+        <input
+          type="text"
+          value={current.location}
+          onChange={(e) => handleChange(e, 'location')}
+        />
+      </td>
+      <td className="px-6 py-4 bg-lightSecondary">
         <button
           type="button"
-          className="edit text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2"
-          onClick={handleUpdate}
+          className="edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2"
+          onClick={() => onEditSubmit()}
         >
-          Update
+          Save
         </button>
       </td>
     </tr>
   );
-}
+};
+
+export default EditRestaurant;
