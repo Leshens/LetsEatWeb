@@ -9,7 +9,7 @@ export const basicSchema = yup.object().shape({
     .required('Please Enter your password')
     .matches(
       "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+      "Must contain 8 Characters with different attributes"
     ),
     firstName: yup.string()
     .required("Required")

@@ -148,8 +148,7 @@ export default function MenuTable() {
     return(
         <form className='addForm flex flex-row items-center justify-center order-2' onSubmit={handleValues}>
 
-            {/* przerwa */}
-            <div className="h-10 w-10"></div>
+            
 
             <input type="text" className="w-40 text-center" name="nazwa" placeholder="Wpisz nazwę" ref={nazwaRef}/>
             <input type="text" className="w-24 text-center" name="cena" placeholder="Podaj cenę" ref={cenaRef}/>
@@ -157,8 +156,6 @@ export default function MenuTable() {
             <button className='add text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-6 py-2'>Add</button>
 
             
-            {/* przerwa */}
-            <div className="h-10 w-10"></div>
 
         </form>
     )

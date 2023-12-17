@@ -2,17 +2,21 @@ import logo from '../img/logoLE2.png';
 import MainPicture from '../img/main-picture.png';
 import AppStore from '../img/AppStore.png';
 import GooglePlay from '../img/GooglePlay.png';
+import { Link } from 'react-router-dom';
 import '../App.css';
 
 
 const Home = () => {
   return <div className="text-center h-full">
 
+  {/* przerwa */}
+  <div className="h-2 w-10"></div>
+
 {/* przyciski pobierania */}
-<div className="Download">
-    <img src={AppStore} className="lg:h-12 md:h-10 sm:h-8 sx:h-6 inline-flex"  alt="AppStore" />
-    <div className="lg:w-10 md:w-10 sm:w-8 sx:w-6 inline-flex"></div>
-    <img src={GooglePlay} className="lg:h-12 md:h-10 sm:h-8 sx:h-6 inline-flex" alt="GooglePlay" />
+<div className="Download inline-flex items-center justify-center">
+    <img src={AppStore} className="lg:h-12 md:h-10 sm:h-8 sx:h-6"  alt="AppStore" />
+    <div className="lg:w-10 md:w-10 sm:w-8 sx:w-6"></div>
+    <img src={GooglePlay} className="lg:h-12 md:h-10 sm:h-8 sx:h-6" alt="GooglePlay" />
   </div>
 
 <header className="App-header">
@@ -21,16 +25,18 @@ const Home = () => {
   </div>
 
     {/* logo */}
+    <a href = "/">
     <img src={logo} className="lg:h-36 md:h-28 sm:h-20 sx:h-16 top-4 left-4 absolute" alt="logo" />
+    </a>
 
   {/* przyciski logowania/rejestrowania */}
   <div className="loginButtons">
     <a href = "/Login">
-    <button type= "button" class="bg-primary text-black lg:px-12 md:px-10 sm:px-8 sx:px-6  lg:p-4 md:p-3 sm:p-2 sx:p-1.5 text-center flex lg:text-xl md:text-lg sm:text-base sx:text-xs float-right rounded-full font-extrabold top-2.5 right-5 absolute">Zaloguj się</button>
+    <button type= "button" class="bg-primary hover:bg-teal-500 text-black lg:px-12 md:px-10 sm:px-8 sx:px-6  lg:p-4 md:p-3 sm:p-2 sx:p-1.5 text-center flex lg:text-xl md:text-lg sm:text-base sx:text-xs float-right rounded-full font-extrabold top-2.5 right-5 absolute">Zaloguj się</button>
     </a>
     <br></br>
     <a href = "/Signup">
-    <button type="button" class="bg-primary text-black lg:p-3 md:p-2 sm:p-1.5 sx:p-1 text-center flex lg:text-xl md:text-lg sm:text-base sx:text-xs float-right rounded-full font-extrabold lg:top-20 md:top-20 sm:top-16 sx:top-12  right-8 absolute">Zarejestruj się</button>
+    <button type="button" class="bg-primary hover:bg-teal-500 text-black lg:p-3 md:p-2 sm:p-1.5 sx:p-1 text-center flex lg:text-xl md:text-lg sm:text-base sx:text-xs float-right rounded-full font-extrabold lg:top-20 md:top-20 sm:top-16 sx:top-12  right-8 absolute">Zarejestruj się</button>
     </a>
   </div>
 </header>
@@ -51,8 +57,8 @@ const Home = () => {
     <div className="text-center lg:text-2xl md:text-xl sm:text-base">
       Chcesz znaleźć wolne miejsce w<br></br>pobliskiej restauracji? Z nami jest<br></br>to banalnie proste!<br></br>
     </div>
-    <div className="text-center lg:text-2xl md:text-xl sm:text-base font-bold">
-    Zacznij już teraz.
+    <div className="text-center lg:text-2xl md:text-xl sm:text-base">
+    <Link to="/SignUp" className="text-black hover:text-primary font-extrabold">Zacznij już teraz.</Link>
     </div>
 
   </div>;
