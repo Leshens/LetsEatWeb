@@ -40,7 +40,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col flex-nowrap items-center justify-center">
       
       <Formik
         initialValues={{ email: '', password: '' }}
@@ -49,8 +49,12 @@ const Signup = () => {
       >
         <Form className='signup-form'>
 
+          {/* przerwa */}
+          <div className="h-4 w-10"></div>
           {/* logo */}
-          <img src={logo} className="h-52" alt="logo" />
+          <a href = "/">
+          <img src={logo} className="h-52 w-52" alt="logo" />
+          </a>
 
           {/* przerwa */}
           <div className="h-10 w-10"></div> 
@@ -61,14 +65,14 @@ const Signup = () => {
               id='email'
               name='email'
               placeholder="Input email" 
-              className="text-xl"
+              className="text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-2 focus:shadow-primaryShadow"
               required
             />
-            <ErrorMessage name='email' component='div' className='error-message' />
+            <ErrorMessage name='email' component='div' className='error-message text-primary' />
           </div>
 
           {/* pasek szary */}
-          <div className="bg-secondary h-0.5 w-3/4 "></div>
+          <div className="bg-secondary h-0.5 w-52 "></div>
 
           <br></br>
 
@@ -78,19 +82,19 @@ const Signup = () => {
               id='password'
               name='password'
               placeholder="Input password" 
-              className="text-xl"
+              className="text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-2 focus:shadow-primaryShadow"
               required
             />
-            <ErrorMessage name='password' component='div' className='error-message' />
+            <ErrorMessage name='password' component='div' className='error-message text-primary' />
           </div>
 
           {/* pasek szary */}
-          <div className="bg-secondary h-0.5 w-3/4 "></div>
+          <div className="bg-secondary h-0.5 w-52 "></div>
 
           {/* przerwa */}
           <div className="h-10 w-16"></div>
 
-          <button type='submit' className='signup-button bg-primary text-black lg:px-16 md:px-10 sm:px-10 sx:px-10   lg:p-4 md:p-3 sm:p-3 sx:p-3   lg:text-xl md:text-lg sm:text-lg sx:text-lg rounded-full font-extrabold'>
+          <button type='submit' className='signup-button bg-primary hover:bg-teal-500 text-black px-16 p-4  w-52 text-center  lg:text-xl md:text-lg sm:text-lg sx:text-lg rounded-full font-extrabold'>
             Signup
           </button>
 
@@ -98,17 +102,20 @@ const Signup = () => {
           <div className="h-4 w-16"></div>
 
           <button onClick={handleClick}>
-          <img src={signgoogle} className="h-14" alt="signgoogle" />
+          <img src={signgoogle} className="h-14 w-52" alt="signgoogle" />
           </button>
 
           {/* przerwa */}
           <div className="h-4 w-16"></div>
 
-          <p>
+          <p className='text-center'>
           Need to Login? 
           <br></br>
-          <Link to='/Login' className="text-black font-extrabold">Login</Link>
+          <Link to='/Login' className="text-black hover:text-primary font-extrabold">Login</Link>
           </p>
+
+          {/* przerwa */}
+          <div className="h-10 w-10"></div>
 
         </Form>
       </Formik>
