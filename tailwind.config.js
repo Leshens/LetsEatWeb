@@ -20,10 +20,11 @@ module.exports = {
       },
       boxShadow: {
         'primaryShadow': '0 5px 15px rgba(108, 220, 187, .4)',
+      },
+      borderWidth: {
+        '3': '3px'
       }
-
-    },
     
   },
   plugins: [],
-}
+}}
