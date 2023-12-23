@@ -9,5 +9,5 @@ export const loginSchema = yup.object().shape({
     .required('Please Enter your password')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Must contain 8 Characters with different attributes"),
+      "Must contain 8 Characters"),
 })

@@ -6,9 +6,24 @@ import { auth, provider } from '../firebase';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { loginSchema } from '../schemas/loginSchema';
+import React, { useState } from 'react';
 
 const Login = () => {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const splitErrorMessage = (message) => {
+    const maxWordsPerLine = 4;
+    const words = message.split(' ');
+    const lines = [];
+
+    for (let i = 0; i < words.length; i += maxWordsPerLine) {
+      const line = words.slice(i, i + maxWordsPerLine).join(' ');
+      lines.push(line);
+    }
+
+    return lines.join('\n');
+  };
 
   const handleSubmit = async (values) => {
     try {
@@ -19,11 +34,25 @@ const Login = () => {
       navigate('/AdminMenu');
     } catch (error) {
       console.error(error);
-      console.log(error.code);
-      console.log(error.message);
+      if (error.code === 'auth/user-not-found') {
+        const formattedErrorMessage = splitErrorMessage('Użytkownik nie znaleziony. Sprawdź swój email i hasło');
+        setErrorMessage(formattedErrorMessage);
+      } else if (error.code === 'auth/invalid-login-credentials') {
+        const formattedErrorMessage = splitErrorMessage('Złe dane logowania');
+        setErrorMessage(formattedErrorMessage);
+      } else if (error.code === 'auth/too-many-requests') {
+        const formattedErrorMessage = splitErrorMessage('Zbyt wiele prób logowania. Spróbuj ponownie później');
+        setErrorMessage(formattedErrorMessage);
+      } else if (error.code === 'auth/email-already-in-use') {
+        const formattedErrorMessage = splitErrorMessage('Email zajęty');
+        setErrorMessage(formattedErrorMessage);
+      } else {
+        const formattedErrorMessage = splitErrorMessage('Wystąpił błąd: ' + error.message);
+        setErrorMessage(formattedErrorMessage);
+      }
     }
   };
-
+  
   const handleClick = async () => {
     try {
       const userCredential = await signInWithPopup(auth, provider);
@@ -33,8 +62,8 @@ const Login = () => {
       navigate('/AdminMenu');
     } catch (error) {
       console.error(error);
-      console.log(error.code);
-      console.log(error.message);
+      console.log('Wystąpił błąd:', error.message);
+      setErrorMessage(error.message);
     }
   };
 
@@ -60,7 +89,7 @@ const Login = () => {
         <div className="h-10 w-10"></div>
 
           <div>
-            <Field type="email" id="email" name="email" placeholder="email" className="text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-2 focus:shadow-primaryShadow" required />
+            <Field type="email" id="email" name="email" placeholder="email" className="text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow" required />
             <ErrorMessage name="email" component="div" className="error-message text-primary" />
           </div>
 
@@ -70,8 +99,12 @@ const Login = () => {
           <br></br>
 
           <div>
-            <Field type="password" id="password" name="password" placeholder="password" className="text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-2 focus:shadow-primaryShadow" required />
+            <Field type="password" id="password" name="password" placeholder="password" className="text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow" required />
             <ErrorMessage name="password" component="div" className="error-message text-primary" />
+            <div className="error-message text-red-500 font-bold">
+          {errorMessage.split('\n').map((line, index) => (
+            <div key={index}>{line}</div>
+          ))}</div>
           </div>
 
           {/* pasek szary */}

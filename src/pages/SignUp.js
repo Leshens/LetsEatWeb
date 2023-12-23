@@ -7,9 +7,25 @@ import { auth, provider } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { loginSchema } from '../schemas/loginSchema';
+import React, { useState } from 'react';
+
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const splitErrorMessage = (message) => {
+    const maxWordsPerLine = 4;
+    const words = message.split(' ');
+    const lines = [];
+
+    for (let i = 0; i < words.length; i += maxWordsPerLine) {
+      const line = words.slice(i, i + maxWordsPerLine).join(' ');
+      lines.push(line);
+    }
+
+    return lines.join('\n');
+  };
 
   const handleSubmit = async (values) => {
     try {
@@ -17,14 +33,19 @@ const Signup = () => {
       const user = userCredential.user;
       localStorage.setItem('token', user.accessToken);
       localStorage.setItem('user', JSON.stringify(user));
-      navigate('/AdminMenu');
+      navigate('/RestaurantForm');
     } catch (error) {
       console.error(error);
-      console.log(error.code);
-      console.log(error.message);
+        if (error.code === 'auth/email-already-in-use') {
+        const formattedErrorMessage = splitErrorMessage('Ten email jest już używany');
+        setErrorMessage(formattedErrorMessage);
+      } else {
+        const formattedErrorMessage = splitErrorMessage('Wystąpił błąd: ' + error.message);
+        setErrorMessage(formattedErrorMessage);
+      }
     }
   };
-
+  
   const handleClick = async () => {
     try {
       const userCredential = await signInWithPopup(auth, provider);
@@ -34,10 +55,11 @@ const Signup = () => {
       navigate('/RestaurantForm');
     } catch (error) {
       console.error(error);
-      console.log(error.code);
-      console.log(error.message);
+      setErrorMessage('Wystąpił błąd: ' + error.message);
     }
   };
+  
+  
 
   return (
     <div className="flex flex-col flex-nowrap items-center justify-center">
@@ -65,7 +87,7 @@ const Signup = () => {
               id='email'
               name='email'
               placeholder="Input email" 
-              className="text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-2 focus:shadow-primaryShadow"
+              className="text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow"
               required
             />
             <ErrorMessage name='email' component='div' className='error-message text-primary' />
@@ -82,10 +104,14 @@ const Signup = () => {
               id='password'
               name='password'
               placeholder="Input password" 
-              className="text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-2 focus:shadow-primaryShadow"
+              className="text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow"
               required
             />
             <ErrorMessage name='password' component='div' className='error-message text-primary' />
+            <div className="error-message text-red-500 font-bold">
+          {errorMessage.split('\n').map((line, index) => (
+            <div key={index}>{line}</div>
+          ))}</div>
           </div>
 
           {/* pasek szary */}
