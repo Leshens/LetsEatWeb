@@ -18,9 +18,13 @@ module.exports = {
         evenLighterSecondary: '#F1F5F9',
         inBetween: '#D4D4D4'
       },
-      
-    },
+      boxShadow: {
+        'primaryShadow': '0 5px 15px rgba(108, 220, 187, .4)',
+      },
+      borderWidth: {
+        '3': '3px'
+      }
     
   },
   plugins: [],
-}
+}}
