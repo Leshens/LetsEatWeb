@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import Data from '../stolikiData.json'
 import '../Table.css'
+import Navbar from "../layout/Navbar";
 
 export default function StolikiTable() {
     const [data, setData] = useState(Data)
@@ -10,6 +11,8 @@ export default function StolikiTable() {
 
             {/* przerwa */}
             <div className="h-10 w-10"></div>
+
+            <Navbar></Navbar>
 
         <div className='flex flex-col items-center justify-center'>
 
@@ -65,8 +68,6 @@ export default function StolikiTable() {
                     </form>
                 </div>
             </div>
-            <a href="AdminMenu">Panel zarządzania danymi restauracji</a>
-            <a href="MenuTable">Panel zarządzania menu</a>
         </div> 
     )
 

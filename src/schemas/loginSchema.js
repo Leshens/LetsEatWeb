@@ -2,12 +2,12 @@ import * as yup from "yup";
 
 export const loginSchema = yup.object().shape({
     email: yup.string()      
-    .email("Invalid email format")
-    .required("Mail is required"),
+    .email("Niepoprawny format maila")
+    .required("Wprowadź mail"),
     password: yup
     .string()
-    .required('Please Enter your password')
+    .required('Wprowadź hasło')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Must contain 8 Characters"),
+      "Hasło ma zawierać 8 znaków"),
 })
