@@ -1,14 +1,18 @@
 import React, { useRef, useState } from 'react'
 import Data from '../dishData.json'
 import '../Table.css'
+import Navbar from "../layout/Navbar";
 
 export default function MenuTable() {
     const [data, setData] = useState(Data)
     const [editState, setEditState] = useState(-1)
     return (
-        <div className='body flex flex-col items-center justify-center'>
+
+        <div className='body'>
             {/* przerwa */}
             <div className="h-10 w-10"></div>
+
+            <Navbar></Navbar>
 
         <div className='flex flex-col items-center justify-center order-1'>
 
@@ -29,10 +33,6 @@ export default function MenuTable() {
             <div className="h-10 w-8 inline-flex order-4"></div>
             <div className="bg-primary h-three w-28 inline-flex order-5"></div>
             </div>
-
-            {/* przerwa */}
-            <div className="h-10 w-10"></div>
-
         </div>
 
 
@@ -40,6 +40,10 @@ export default function MenuTable() {
                 <div>
                     <AddDish setData={setData}/>
                     <form onSubmit={handleUpdate}>
+
+                         {/* przerwa */}
+                        <div className="h-10 w-10"></div>
+
                     <table className='border-primary border-b-2 border-collapse text-2xl text-center shadow-md'>
                         <thead className='text-secondary border-primary border-b-2'>
                             <th scope="col" class="px-6 py-4 bg-inBetween">Nazwa</th>
@@ -147,16 +151,10 @@ export default function MenuTable() {
     }
     return(
         <form className='addForm flex flex-row items-center justify-center order-2' onSubmit={handleValues}>
-
-            
-
-            <input type="text" className="w-40 text-center" name="nazwa" placeholder="Wpisz nazwę" ref={nazwaRef}/>
-            <input type="text" className="w-24 text-center" name="cena" placeholder="Podaj cenę" ref={cenaRef}/>
-            <input type="text" className="w-40 text-center" name="photo" placeholder="Dodaj zdjęcie" ref={photoRef}/>
+            <input type="text" className="w-40 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="nazwa" placeholder="Wpisz nazwę" ref={nazwaRef}/>
+            <input type="text" className="w-24 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="cena" placeholder="Podaj cenę" ref={cenaRef}/>
+            <input type="text" className="w-40 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="photo" placeholder="Dodaj zdjęcie" ref={photoRef}/>
             <button className='add text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-6 py-2'>Add</button>
-
-            
-
         </form>
     )
   }

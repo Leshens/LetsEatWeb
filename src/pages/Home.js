@@ -4,10 +4,13 @@ import AppStore from '../img/AppStore.png';
 import GooglePlay from '../img/GooglePlay.png';
 import { Link } from 'react-router-dom';
 import '../App.css';
+import Navbar from "../layout/Navbar";
 
 
 const Home = () => {
   return <div className="text-center h-full">
+
+  <Navbar></Navbar>
 
   {/* przerwa */}
   <div className="h-2 w-10"></div>
@@ -23,11 +26,6 @@ const Home = () => {
 {/* przerwa żeby download byl dalej od main textu */}
   <div className="h-24 w-24">
   </div>
-
-    {/* logo */}
-    <a href = "/">
-    <img src={logo} className="lg:h-36 md:h-28 sm:h-20 sx:h-16 top-4 left-4 absolute" alt="logo" />
-    </a>
 
   {/* przyciski logowania/rejestrowania */}
   <div className="loginButtons">
