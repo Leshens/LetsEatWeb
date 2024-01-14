@@ -135,110 +135,62 @@ const MenuTablePresenter = () => {
 
 export default MenuTablePresenter;
 
-function EditDish({ current = {}, data, setData, handleUpdate }) {
-    const [dishData, setDishData] = useState({
-      nazwa: current.nazwa || "",
-      cena: current.cena || "",
-      photo: current.photo || "",
-    });
-  
-    useEffect(() => {
-      console.log("EditDish re-rendered with state:", dishData);
-      setDishData({
-        nazwa: current.nazwa || "",
-        cena: current.cena || "",
-        photo: current.photo || "",
-      });
-    }, [current]);
-  
-    const handleChange = (fieldName, value) => {
-      setDishData((prevData) => ({
-        ...prevData,
-        [fieldName]: value,
-      }));
-    };
-  
-    const handleUpdateClick = () => {
-      // Call handleUpdate with the updated data
-      handleUpdate(dishData);
-    };
-  
-    return (
-      <tr className='bg-green-100'>
-        <td>
-          <input
-            type="text"
-            className="w-52 py-4 bg-green-100"
-            onChange={(e) => handleChange('nazwa', e.target.value)}
-            value={dishData.nazwa}
-            name="nazwa"
-            placeholder="Wpisz nazwę"
-          />
-        </td>
-        <td>
-          <input
-            type="text"
-            className="w-24 py-4 bg-green-100"
-            onChange={(e) => handleChange('cena', e.target.value)}
-            value={dishData.cena}
-            name="cena"
-            placeholder="Wpisz cenę"
-          />
-        </td>
-        <td>
-          <input
-            type="text"
-            className="w-64 py-4 bg-green-100"
-            onChange={(e) => handleChange('photo', e.target.value)}
-            value={dishData.photo}
-            name="photo"
-            placeholder="Wyślij zdjęcie"
-          />
-        </td>
-        <td>
-          <button
-            type='button'
-            className='edit text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2'
-            onClick={handleUpdateClick}
-          >
-            Update
-          </button>
-        </td>
-      </tr>
-    );
+function EditDish({current, data, setData}){
+  function handleNazwa(event) {
+      const nazwa = event.target.value;
+      const updatedData = data.map((d) => d.id === current.id ? {...d, nazwa:nazwa} : d)
+      setData(updatedData)
   }
-  
-  
 
+  function handleCena(event) {
+      const cena = event.target.value;
+      const updatedData = data.map((d) => d.id === current.id ? {...d, cena:cena} : d)
+      setData(updatedData)
+  }
 
-function AddDish({ setData, data }) {
-  const nazwaRef = useRef();
-  const cenaRef = useRef();
-  const photoRef = useRef();
+  function handlePhoto(event) {
+      const photo = event.target.value;
+      const updatedData = data.map((d) => d.id === current.id ? {...d, photo:photo} : d)
+      setData(updatedData)
+  }
 
-  function handleValues(event) {
-    event.preventDefault();
-    const nazwa = event.target.elements.nazwa.value;
-    const cena = event.target.elements.cena.value;
-    const photo = event.target.elements.photo.value;
-    const newDish = {
-      id: data.length + 1,
+return(
+  <tr className='bg-green-100'>
+      <td><input type="text" className="w-52 py-4 bg-green-100" onChange={handleNazwa} value={current.nazwa} name="nazwa" placeholder="Wpisz nazwę"/></td>
+      <td><input type="text" className="w-24 py-4 bg-green-100" onChange={handleCena} value={current.cena} name="cena" placeholder="Wpisz cenę" /></td>
+      <td><input type="text" className="w-64 py-4 bg-green-100" onChange={handlePhoto} value={current.photo} name="photo" placeholder="Wyślij zdjęcie" /></td>
+      <td><button type='submit' className='edit text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2'>Update</button></td>
+  </tr>
+)
+}
+
+function AddDish({setData}) {
+const nazwaRef= useRef()
+const cenaRef= useRef()
+const photoRef= useRef()
+
+function handleValues(event) {
+  event.preventDefault();
+  const nazwa =  event.target.elements.nazwa.value;
+  const cena =  event.target.elements.cena.value;
+  const photo =  event.target.elements.photo.value;
+  const newDish = {
+      id: 4,
       nazwa,
       cena,
       photo,
-    };
-    setData((prevData) => [...prevData, newDish]);
-    nazwaRef.current.value = "";
-    cenaRef.current.value = "";
-    photoRef.current.value = "";
   }
-
-  return (
-    <form className='addForm flex flex-row items-center justify-center order-2' onSubmit={handleValues}>
-      <input type="text" className="w-40 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="nazwa" placeholder="Wpisz nazwę" ref={nazwaRef} />
-      <input type="text" className="w-24 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="cena" placeholder="Podaj cenę" ref={cenaRef} />
-      <input type="text" className="w-40 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="photo" placeholder="Dodaj zdjęcie" ref={photoRef} />
+  setData(prevData => prevData.concat(newDish))
+  nazwaRef.current.value = ""
+  cenaRef.current.value = ""
+  photoRef.current.value = ""
+}
+return(
+  <form className='addForm flex flex-row items-center justify-center order-2' onSubmit={handleValues}>
+      <input type="text" className="w-40 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="nazwa" placeholder="Wpisz nazwę" ref={nazwaRef}/>
+      <input type="text" className="w-24 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="cena" placeholder="Podaj cenę" ref={cenaRef}/>
+      <input type="text" className="w-40 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="photo" placeholder="Dodaj zdjęcie" ref={photoRef}/>
       <button className='add text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-6 py-2'>Add</button>
-    </form>
-  );
+  </form>
+)
 }
