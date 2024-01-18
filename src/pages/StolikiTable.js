@@ -1,152 +1,146 @@
-import React, { useState } from 'react';
-import Data from '../stolikiData.json';
-import '../Table.css';
+import React, { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 import Navbar from '../layout/Navbar';
 
-// Model
+// Model dla Stolików
 const StolikiTableModel = ({ data, setData, editState, setEditState }) => {
-  const handleUpdate = (event) => {
-    event.preventDefault();
-    const nazwa = event.target.elements.nazwa.value;
-    const twoSeater = event.target.elements.twoSeater.value;
-    const fourSeater = event.target.elements.fourSeater.value;
-    const sixSeater = event.target.elements.sixSeater.value;
-    const eightSeater = event.target.elements.eightSeater.value;
-    const updatedData = data.map((d) => (d.id === editState ? { ...d, nazwa, twoSeater, fourSeater, sixSeater, eightSeater } : d));
-    setEditState(-1);
-    setData(updatedData);
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await axios.get('http://31.179.139.182:690/tables');
+      setData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }, [setData]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://31.179.139.182:690/deleteTable/${id}`);
+      const updatedData = data.filter((d) => d.tableId !== id);
+      setData(updatedData);
+    } catch (error) {
+      console.error('Error deleting table:', error);
+    }
   };
 
-  const handleEdit = (id) => {
-    setEditState(id);
+  const handleAddTableSubmit = async (size) => {
+    try {
+      const token = 11234567899009;
+      const restaurantId = 1;
+      // const token = localStorage.getItem('token');
+      // const restaurantId = localStorage.getItem('restaurantId');
+
+      const postData = {
+        token,
+        size,
+        restaurantId,
+      };
+
+      // Log the data before making the POST request
+      console.log('POST Data:', postData);
+
+      await axios.post('http://31.179.139.182:690/table', postData);
+
+      fetchData();
+    } catch (error) {
+      console.error('Error adding table:', error);
+    }
   };
 
-  return { handleUpdate, handleEdit };
+  return { handleDelete, handleAddTableSubmit };
 };
 
-// View
-const StolikiTableView = ({ data, editState, handleUpdate, handleEdit, setData }) => (
-  <div className='body'>
-    <div className='h-10 w-10'></div>
+// Widok dla Stolików
+const StolikiTableView = ({ data, handleDelete, handleAddTableSubmit }) => {
+  const [selectedSize, setSelectedSize] = useState(2);
+  const [newTableSize, setNewTableSize] = useState(2);
 
-    <Navbar></Navbar>
+  const handleSizeChange = (event) => {
+    setNewTableSize(Number(event.target.value));
+  };
 
-    <div className='flex flex-col items-center justify-center'>
-      <h2 className='text-center text-3xl text-secondary font-semibold'>Panel administratora</h2>
-      <div className='h-4 w-10'></div>
+  const handleSubmit = () => {
+    console.log({ size: newTableSize });
+    handleAddTableSubmit(newTableSize);
+    setNewTableSize(2); // Reset input field after submission
+  };
 
-      <div className='inline-flex items-center justify-center'>
-        <div className='bg-primary h-three w-28 inline-flex order-1'></div>
-        <div className='h-10 w-8 inline-flex order-2'></div>
-        <h3 className='text-center text-3xl text-secondary font-semibold inline-flex order-3'>Stoliki</h3>
-        <div className='h-10 w-8 inline-flex order-4'></div>
-        <div className='bg-primary h-three w-28 inline-flex order-5'></div>
+
+  return (
+    <div className='body'>
+      <Navbar />
+      <div className='flex flex-col items-center justify-center'>
+        <h2 className='text-center text-3xl text-secondary font-semibold'>Panel administratora</h2>
+        <div className='h-4 w-10'></div>
+
+        <div className='inline-flex items-center justify-center'>
+          <div className='bg-primary h-three w-28 inline-flex order-1'></div>
+          <div className='h-10 w-8 inline-flex order-2'></div>
+          <h3 className='text-center text-3xl text-secondary font-semibold inline-flex order-3'>Stoliki</h3>
+          <div className='h-10 w-8 inline-flex order-4'></div>
+          <div className='bg-primary h-three w-28 inline-flex order-5'></div>
+        </div>
       </div>
-    </div>
 
-    <div className='tableWrap flex items-center justify-center h-screen'>
-      <div>
-        <form onSubmit={handleUpdate}>
-          <table className='border-primary border-b-2 border-collapse text-2xl text-center shadow-md'>
-            <thead className='text-secondary border-primary border-b-2'>
-              <th scope='col' className='px-6 py-4 bg-inBetween'>
-                Nazwa
-              </th>
-              <th scope='col' className='px-6 py-4 bg-inBetween'>
-                2os
-              </th>
-              <th scope='col' className='px-6 py-4 bg-inBetween'>
-                4os
-              </th>
-              <th scope='col' className='px-6 py-4 bg-inBetween'>
-                6os
-              </th>
-              <th scope='col' className='px-6 py-4 bg-inBetween'>
-                8os
-              </th>
-              <th scope='col' className='px-6 py-4 bg-inBetween'>
-                Action
-              </th>
-            </thead>
+      <div className='tableWrap flex items-center justify-center h-screen'>
+        <div>
+          {/* Card for adding a new table (always visible) */}
+          <div className='bg-lightSecondary p-4 rounded-md cursor-pointer text-center'>
+            <p className='text-xl font-semibold'>Add Table</p>
+            <input
+              type='number'
+              value={newTableSize}
+              onChange={handleSizeChange}
+              className='w-16 py-2 text-center border border-gray-400 rounded-md'
+            />
+            <button
+              type='button'
+              onClick={handleSubmit}
+              className='text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2 mt-2'
+            >
+              Add
+            </button>
+          </div>
+
+          {/* Existing table cards */}
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
             {data.map((current) => (
-              editState === current.id ? (
-                <EditStolik current={current} key={current.id} data={data} setData={setData} />
-              ) : (
-                <tr key={current.id}>
-                  <td className='px-6 py-4 bg-lightSecondary'>{current.nazwa}</td>
-                  <td className='px-6 py-4 bg-lightSecondary'>{current.twoSeater}</td>
-                  <td className='px-6 py-4 bg-lightSecondary'>{current.fourSeater}</td>
-                  <td className='px-6 py-4 bg-lightSecondary'>{current.sixSeater}</td>
-                  <td className='px-6 py-4 bg-lightSecondary'>{current.eightSeater}</td>
-                  <td className='px-6 py-4 bg-lightSecondary'>
-                    <button
-                      type='button'
-                      className='edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2'
-                      onClick={() => handleEdit(current.id)}
-                    >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              )
+              <div key={current.tableId} className='bg-lightSecondary p-4 rounded-md'>
+                <p className='text-xl font-semibold'>Size: {current.size}</p>
+                <button
+                  type='button'
+                  className='text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2 mt-2'
+                  onClick={() => handleDelete(current.tableId)}
+                >
+                  Delete
+                </button>
+              </div>
             ))}
-          </table>
-        </form>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
-// Presenter
+// Prezenter dla Stolików
 const StolikiTablePresenter = () => {
-  const [data, setData] = useState(Data);
+  const [data, setData] = useState([]);
   const [editState, setEditState] = useState(-1);
 
-  const { handleUpdate, handleEdit } = StolikiTableModel({ data, setData, editState, setEditState });
-  return <StolikiTableView data={data} editState={editState} handleUpdate={handleUpdate} handleEdit={handleEdit} setData={setData} />;
+  const stolikiTableModel = StolikiTableModel({ data, setData, editState, setEditState });
+
+  useEffect(() => {
+    axios.get('http://31.179.139.182:690/tables')
+      .then(response => setData(response.data))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
+  return <StolikiTableView data={data} editState={editState} {...stolikiTableModel} />;
 };
 
 export default StolikiTablePresenter;
-
-function EditStolik({ current, data, setData }) {
-  const handleNazwa = (event) => {
-    const nazwa = event.target.value;
-    const updatedData = data.map((d) => (d.id === current.id ? { ...d, nazwa } : d));
-    setData(updatedData);
-  };
-
-  const handleTwoSeater = (event) => {
-    const twoSeater = event.target.value;
-    const updatedData = data.map((d) => (d.id === current.id ? { ...d, twoSeater } : d));
-    setData(updatedData);
-  };
-
-  const handleFourSeater = (event) => {
-    const fourSeater = event.target.value;
-    const updatedData = data.map((d) => (d.id === current.id ? { ...d, fourSeater } : d));
-    setData(updatedData);
-  };
-
-  const handleSixSeater = (event) => {
-    const sixSeater = event.target.value;
-    const updatedData = data.map((d) => (d.id === current.id ? { ...d, sixSeater } : d));
-    setData(updatedData);
-  };
-
-  const handleEightseater = (event) => {
-    const eightSeater = event.target.value;
-    const updatedData = data.map((d) => (d.id === current.id ? { ...d, eightSeater } : d));
-    setData(updatedData);
-  };
-
-  return (
-    <tr className='bg-green-100'>
-      <td><input type="text" className="w-20 py-4 bg-green-100" onChange={handleNazwa} value={current.nazwa} name="nazwa" placeholder="Wpisz nazwę"/></td>
-      <td><input type="number" className="w-20 py-4 bg-green-100" onChange={handleTwoSeater} value={current.twoSeater} name="twoSeater" placeholder="Podaj ilość dwu-osobowych stolików" /></td>
-      <td><input type="number" className="w-20 py-4 bg-green-100" onChange={handleFourSeater} value={current.fourSeater} name="fourSeater" placeholder="Podaj ilość cztero-osobowych stolików " /></td>
-      <td><input type="number" className="w-20 py-4 bg-green-100" onChange={handleSixSeater} value={current.sixSeater} name="sixSeater" placeholder="Podaj ilość sześcio-osobowych stolików" /></td>
-      <td><input type="number" className="w-20 py-4 bg-green-100" onChange={handleEightseater} value={current.eightSeater} name="eightSeater" placeholder="Podaj ośmio-osobowych stolików" /></td>
-      <td><button type='submit' className='text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2'>Update</button></td>
-    </tr>
-  );
-}

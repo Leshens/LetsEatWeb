@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Data from '../restaurantData.json';
-import '../Table.css';
+//import '../Table.css';
 import Navbar from '../layout/Navbar';
 
 // Model
@@ -14,8 +14,8 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
     const phoneNumber = event.target.elements.phoneNumber.value;
     const photoLink = event.target.elements.photoLink.value;
     const websiteLink = event.target.elements.websiteLink.value;
-    const longitude = event.target.elements.phoneNumber.value;
-    const latitude = event.target.elements.phoneNumber.value;
+    const longitude = event.target.elements.longitude.value;
+    const latitude = event.target.elements.latitude.value;
     const updatedData = data.map((d) => (d.id === editState ? { ...d, restaurantName, restaurantCategory, openingHours, location, phoneNumber, photoLink, websiteLink, longitude, latitude } : d));
     setEditState(-1);
     setData(updatedData);
@@ -83,10 +83,10 @@ const AdminMenuView = ({ data, editState, handleUpdate, handleEdit, setData }) =
                 Strona
               </th>
               <th scope="col" className="px-6 py-4 bg-inBetween">
-                Długość<br></br> geograficzna
+                Długość<br></br>geograficzna
               </th>
               <th scope="col" className="px-6 py-4 bg-inBetween">
-                Szerokość<br></br> geograficzna
+                Szerokość<br></br>geograficzna
               </th>
               <th scope="col" className="px-6 py-4 bg-inBetween">
                 Action
