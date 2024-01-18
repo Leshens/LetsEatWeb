@@ -86,34 +86,36 @@ const StolikiTableView = ({ data, handleDelete, handleAddTableSubmit }) => {
         </div>
       </div>
 
-      <div className='tableWrap flex items-center justify-center h-screen'>
+      <div className='tablesContainer flex items-center justify-center h-screen'>
         <div>
           {/* Card for adding a new table (always visible) */}
-          <div className='bg-lightSecondary p-4 rounded-md cursor-pointer text-center'>
-            <p className='text-xl font-semibold'>Add Table</p>
-            <input
-              type='number'
-              value={newTableSize}
-              onChange={handleSizeChange}
-              className='w-16 py-2 text-center border border-gray-400 rounded-md'
-            />
-            <button
-              type='button'
-              onClick={handleSubmit}
-              className='text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2 mt-2'
-            >
-              Add
-            </button>
+          <div className='bg-lightSecondary p-4 rounded-md cursor-pointer text-center border border-primary shadow-md'>
+            <p className='text-xl font-semibold mb-2'>Add Table</p>
+            <div className='flex items-center justify-center'>
+              <input
+                type='number'
+                value={newTableSize}
+                onChange={handleSizeChange}
+                className='w-16 py-2 text-center border border-gray-400 rounded-md mr-2'
+              />
+              <button
+                type='button'
+                onClick={handleSubmit}
+                className='text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2'
+              >
+                Add
+              </button>
+            </div>
           </div>
 
           {/* Existing table cards */}
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4'>
             {data.map((current) => (
               <div key={current.tableId} className='bg-lightSecondary p-4 rounded-md'>
-                <p className='text-xl font-semibold'>Size: {current.size}</p>
+                <p className='text-xl font-semibold mb-2'>Size: {current.size}</p>
                 <button
                   type='button'
-                  className='text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2 mt-2'
+                  className='text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2'
                   onClick={() => handleDelete(current.tableId)}
                 >
                   Delete
@@ -126,6 +128,8 @@ const StolikiTableView = ({ data, handleDelete, handleAddTableSubmit }) => {
     </div>
   );
 };
+
+
 
 // Prezenter dla Stolików
 const StolikiTablePresenter = () => {
