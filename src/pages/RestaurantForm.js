@@ -5,22 +5,14 @@ import Dropdown from "./Dropdown";
 
 export default function RestaurantForm() {
     const options = [
-        { value: "american", label: "Amerykańskie"},
-        { value: "asian", label: "Azjatyckie"},
-        { value: "middleeastern", label: "Bliskowschodnie"},
-        { value: "burgers", label: "Burgery"},
-        { value: "desserts", label: "Desery"},
-        { value: "european", label: "Europejskie"},
-        { value: "indian", label: "Indyjskie"},
-        { value: "mexican", label: "Meksykańskie"},
-        { value: "pancake", label: "Naleśniki"},
-        { value: "pizza", label: "Pizza"},
-        { value: "salads", label: "Sałatki"},
-        { value: "sushi", label: "Sushi"},
-        { value: "breakfast", label: "Śniadanie"},
-        { value: "vegetarian", label: "Wegetariańskie"},
-        { value: "italian", label: "Włoskie"},
-        { value: "healthy_cuisine", label: "Zdrowa kuchnia"},
+        { value: "ITALIAN", label: "Włoskie"},
+        { value: "CHINESE", label: "Chińskie"},
+        { value: "MEXICAN", label: "Meksykańskie"},
+        { value: "AMERICAN", label: "Amerykańskie"},
+        { value: "INDIAN", label: "Indyjskie"},
+        { value: "JAPANESE", label: "Japońskie"},
+        { value: "FRENCH", label: "Francuskie"},
+        { value: "OTHER", label: "Inne"},
     ]
     return (
         <div className="restaurantForm flex flex-col items-center justify-center">
@@ -63,15 +55,9 @@ export default function RestaurantForm() {
                 </div>
         
                <input
-                type="time"
-                name="hourStart"
-                placeholder="10:00"
-                className="form-control"
-               />
-               <input
-                type="time"
-                name="hourEnd"
-                placeholder="10:00"
+                type="string"
+                name="openingHours"
+                placeholder="Godziny otwarcia: np.8AM-10PM"
                 className="form-control"
                />
                <br></br>
@@ -84,55 +70,26 @@ export default function RestaurantForm() {
                <br></br>
                <input
                 type="string"
-                name="telephone"
-                placeholder="telefon"
+                name="phoneNumber"
+                placeholder="numer telefonu"
                 className="form-control"
                />
                <br></br>
-               <label className="">Ilość stolików 2-osobowych: </label>
                <input
-                type="number"
-                name="2p table"
-                placeholder="0"
-                className="form-control w-12"
+                type="string"
+                name="photoLink"
+                placeholder="Link do zdjęcia restauracji"
+                className="form-control"
                />
                <br></br>
-
-                {/* przerwa */}
-               <div className="h-2 w-10"></div>
-
-               <label className="">Ilość stolików 4-osobowych: </label>
                <input
-                type="number"
-                name="4p table"
-                placeholder="0"
-                className="form-control w-12"
+                type="string"
+                name="websiteLink"
+                placeholder="Link do strony internetowej"
+                className="form-control"
                />
                <br></br>
-
-                {/* przerwa */}
-               <div className="h-2 w-10"></div>
-
-               <label className="">Ilość stolików 6-osobowych: </label>
-               <input 
-                type="number"
-                name="6p table"
-                placeholder="0"
-                className="form-control w-12"
-               />
-               <br></br>
-
-               {/* przerwa */}
-               <div className="h-2 w-10"></div>
-
-               <label className="">Ilość stolików 8-osobowych: </label>
-               <input
-                type="number"
-                name="8p table"
-                placeholder="0"
-                className="form-control w-12"
-               />
-               <br></br>
+               
 
                 {/* przerwa */}
                 <div className="h-10 w-10"></div>

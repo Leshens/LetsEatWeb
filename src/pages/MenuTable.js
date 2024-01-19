@@ -1,34 +1,71 @@
-import React, { useRef, useState} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Data from '../dishData.json';
 import '../Table.css';
 import Navbar from '../layout/Navbar';
+import axios from 'axios';
 
 // Model
 const MenuTableModel = ({ data, setData, editState, setEditState }) => {
-  const handleUpdate = (event) => {
+  const handleUpdate = async (event, current) => {
     event.preventDefault();
     const name = event.target.elements.name.value;
     const price = event.target.elements.price.value;
-    const updatedData = data.map((d) => (d.id === editState ? { ...d, name, price } : d));
-    setEditState(-1);
-    setData(updatedData);
+
+    try {
+      const response = await axios.put(`http://31.179.139.182:690/api/menu/${current.id}`, { name, price });
+      const updatedData = data.map((d) => (d.id === current.id ? response.data : d));
+      setEditState(-1);
+      setData(updatedData);
+    } catch (error) {
+      console.error('Error updating dish:', error);
+    }
   };
 
   const handleEdit = (id) => {
     setEditState(id);
   };
 
-  const handleDelete = (id) => {
-    const updatedData = data.filter((d) => id !== d.id);
-    setData(updatedData);
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://31.179.139.182:690/api/menu/${id}`);
+      const updatedData = data.filter((d) => id !== d.id);
+      setData(updatedData);
+    } catch (error) {
+      console.error('Error deleting dish:', error);
+    }
   };
 
-  return { handleUpdate, handleEdit, handleDelete };
+  const handleAdd = async (newDish) => {
+    try {
+      const response = await axios.post('http://31.179.139.182:690/api/menu', newDish);
+      setData((prevData) => [...prevData, response.data]);
+    } catch (error) {
+      console.error('Error adding dish:', error);
+    }
+  };
+
+  const handleGetDish = async (id) => {
+    try {
+      const response = await axios.get(`http://31.179.139.182:690/api/menu/${id}`);
+      // Assuming the response.data contains the details of the dish with the specified id
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching dish details:', error);
+    }
+  };
+
+  return { handleUpdate, handleEdit, handleDelete, handleAdd, handleGetDish };
 };
 
 // View
-const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete, setData }) => (
-  <div className="body">
+const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete, handleAdd, handleGetDish, setData }) => {
+  useEffect(() => {
+    // Fetch dish details when the component mounts (you can replace '1' with the desired dish id)
+    handleGetDish(1);
+  }, [handleGetDish]);
+
+  return (
+    <div className="body">
     {/* przerwa */}
     <div className="h-10 w-10"></div>
 
@@ -53,7 +90,7 @@ const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete
 
     <div className="tableWrap flex items-center justify-center h-screen order-3">
       <div>
-        <AddDish setData={setData} data={data} />
+        <AddDish handleAdd={handleAdd} />
         <form onSubmit={handleUpdate}>
           {/* przerwa */}
           <div className="h-10 w-10"></div>
@@ -105,15 +142,16 @@ const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete
         </form>
       </div>
     </div>
-  </div>
-);
+    </div>
+  );
+};
 
 // Presenter
 const MenuTablePresenter = () => {
   const [data, setData] = useState(Data);
   const [editState, setEditState] = useState(-1);
 
-  const { handleUpdate, handleEdit, handleDelete } = MenuTableModel({ data, setData, editState, setEditState });
+  const { handleUpdate, handleEdit, handleDelete, handleAdd, handleGetDish } = MenuTableModel({ data, setData, editState, setEditState });
   return (
     <MenuTableView
       data={data}
@@ -121,6 +159,8 @@ const MenuTablePresenter = () => {
       handleUpdate={handleUpdate}
       handleEdit={handleEdit}
       handleDelete={handleDelete}
+      handleAdd={handleAdd}
+      handleGetDish={handleGetDish}
       setData={setData}
     />
   );
@@ -128,44 +168,59 @@ const MenuTablePresenter = () => {
 
 export default MenuTablePresenter;
 
-function EditDish({current, data, setData}){
+function EditDish({ current, data, setData, handleUpdate }) {
   function handleName(event) {
-      const name = event.target.value;
-      const updatedData = data.map((d) => d.id === current.id ? {...d, name:name} : d)
-      setData(updatedData)
+    const name = event.target.value;
+    const updatedData = data.map((d) => (d.id === current.id ? { ...d, name: name } : d));
+    setData(updatedData);
   }
 
   function handlePrice(event) {
-      const price = event.target.value;
-      const updatedData = data.map((d) => d.id === current.id ? {...d, price:price} : d)
-      setData(updatedData)
+    const price = event.target.value;
+    const updatedData = data.map((d) => (d.id === current.id ? { ...d, price: price } : d));
+    setData(updatedData);
   }
-return(
-  <tr className='bg-green-100'>
-      <td><input type="text" className="w-52 py-4 bg-green-100" onChange={handleName} value={current.name} name="name" placeholder="Wpisz nazwę"/></td>
-      <td><input type="text" className="w-24 py-4 bg-green-100" onChange={handlePrice} value={current.price} name="price" placeholder="Wpisz cenę" /></td>
-      <td><button type='submit' className='edit text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2'>Update</button></td>
-  </tr>
-)
+
+  return (
+    <tr className="bg-green-100">
+      <td>
+        <input type="text" className="w-52 py-4 bg-green-100" onChange={handleName} value={current.name} name="name" placeholder="Wpisz nazwę" />
+      </td>
+      <td>
+        <input type="text" className="w-24 py-4 bg-green-100" onChange={handlePrice} value={current.price} name="price" placeholder="Wpisz cenę" />
+      </td>
+      <td>
+        <button
+          type="submit"
+          className="edit text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2"
+          onClick={(event) => handleUpdate(event, current)}
+        >
+          Update
+        </button>
+      </td>
+    </tr>
+  );
 }
 
-function AddDish({setData}) {
-const nameRef= useRef()
-const priceRef= useRef()
+function AddDish({ handleAdd }) {
+  const nameRef = useRef();
+  const priceRef = useRef();
 
-function handleValues(event) {
-  event.preventDefault();
-  const name =  event.target.elements.name.value;
-  const price =  event.target.elements.price.value;
-  const newDish = {
-      id: 4,
+  function handleValues(event) {
+    event.preventDefault();
+    const name = event.target.elements.name.value;
+    const price = event.target.elements.price.value;
+
+    const newDish = {
       name,
       price,
+    };
+
+    handleAdd(newDish);
+
+    nameRef.current.value = '';
+    priceRef.current.value = '';
   }
-  setData(prevData => prevData.concat(newDish))
-  nameRef.current.value = ""
-  priceRef.current.value = ""
-}
 return(
   <form className='addForm flex flex-row items-center justify-center order-2' onSubmit={handleValues}>
       <input type="text" className="w-40 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="name" placeholder="Wpisz nazwę" ref={nameRef}/>
