@@ -6,10 +6,10 @@ import Navbar from '../layout/Navbar';
 const StolikiTableModel = ({ data, setData, editState, setEditState }) => {
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get('http://31.179.139.182:690/tables');
+      const response = await axios.get('http://31.179.139.182:690/api/tables');
       setData(response.data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching model data:', error);
     }
   }, [setData]);
 
@@ -19,7 +19,15 @@ const StolikiTableModel = ({ data, setData, editState, setEditState }) => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://31.179.139.182:690/deleteTable/${id}`);
+      const token = 11234567899009;
+      //const token = localStorage.getItem('token');
+      const deleteUrl = `http://31.179.139.182:690/api/tables/${id}`;
+      await axios.delete(deleteUrl, {
+        headers: {
+          'Authorization': `${token}`
+        }
+      });
+      console.log('Deleting table with ID:', id, 'and token:', token);
       const updatedData = data.filter((d) => d.tableId !== id);
       setData(updatedData);
     } catch (error) {
@@ -43,7 +51,7 @@ const StolikiTableModel = ({ data, setData, editState, setEditState }) => {
       // Log the data before making the POST request
       console.log('POST Data:', postData);
 
-      await axios.post('http://31.179.139.182:690/table', postData);
+      await axios.post('http://31.179.139.182:690/api/tables', postData);
 
       fetchData();
     } catch (error) {
@@ -56,18 +64,19 @@ const StolikiTableModel = ({ data, setData, editState, setEditState }) => {
 
 // Widok dla Stolików
 const StolikiTableView = ({ data, handleDelete, handleAddTableSubmit }) => {
-  const [selectedSize, setSelectedSize] = useState(2);
   const [newTableSize, setNewTableSize] = useState(2);
 
   const handleSizeChange = (event) => {
-    setNewTableSize(Number(event.target.value));
+    const newSize = Math.max(1, Math.min(Number(event.target.value), 100));
+    setNewTableSize(newSize);
   };
 
   const handleSubmit = () => {
     console.log({ size: newTableSize });
     handleAddTableSubmit(newTableSize);
-    setNewTableSize(2); // Reset input field after submission
+    setNewTableSize(2);
   };
+
 
 
   return (
@@ -139,7 +148,7 @@ const StolikiTablePresenter = () => {
   const stolikiTableModel = StolikiTableModel({ data, setData, editState, setEditState });
 
   useEffect(() => {
-    axios.get('http://31.179.139.182:690/tables')
+    axios.get('http://31.179.139.182:690/api/tables')
       .then(response => setData(response.data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
