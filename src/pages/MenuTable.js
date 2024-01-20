@@ -12,7 +12,7 @@ const MenuTableModel = ({ data, setData, editState, setEditState }) => {
     const price = event.target.elements.price.value;
 
     try {
-      const response = await axios.put(`http://31.179.139.182:690/api/menu/${current.id}`, { name, price });
+      const response = await axios.patch(`http://31.179.139.182:690/api/menus/${current.id}`, { name, price });
       const updatedData = data.map((d) => (d.id === current.id ? response.data : d));
       setEditState(-1);
       setData(updatedData);
@@ -27,7 +27,7 @@ const MenuTableModel = ({ data, setData, editState, setEditState }) => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://31.179.139.182:690/api/menu/${id}`);
+      await axios.delete(`http://31.179.139.182:690/api/menus/${id}`);
       const updatedData = data.filter((d) => id !== d.id);
       setData(updatedData);
     } catch (error) {
@@ -37,20 +37,19 @@ const MenuTableModel = ({ data, setData, editState, setEditState }) => {
 
   const handleAdd = async (newDish) => {
     try {
-      const response = await axios.post('http://31.179.139.182:690/api/menu', newDish);
+      const response = await axios.post('http://31.179.139.182:690/api/menus', newDish);
       setData((prevData) => [...prevData, response.data]);
     } catch (error) {
       console.error('Error adding dish:', error);
     }
   };
 
-  const handleGetDish = async (id) => {
+  const handleGetDish = async () => {
     try {
-      const response = await axios.get(`http://31.179.139.182:690/api/menu/${id}`);
-      // Assuming the response.data contains the details of the dish with the specified id
-      console.log(response.data);
+      const response = await axios.get('http://31.179.139.182:690/api/menus');
+      setData(response.data);
     } catch (error) {
-      console.error('Error fetching dish details:', error);
+      console.error('Error fetching dishes:', error);
     }
   };
 

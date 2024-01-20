@@ -65,14 +65,15 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
   
       // if (locationCoordinates) {
         // setCoordinates(locationCoordinates);
-        //token = restaurant.token;
-        const token= '11a234v5678b99009'
-        const response = await axios.put(`http://31.179.139.182:690/api/restaurants/1`, formValues, {
+        const response = await axios.patch(`http://31.179.139.182:690/api/restaurants/1`, formValues, {
             headers: {
               'Authorization': '11234567899009',
               'Content-Type': 'application/json',  // Adjust content type if needed
             },
           });
+
+          console.log('Form Values:', formValues);
+          console.log('API Response:', response.data);
   
         const updatedData = data.map((d) =>
           d.id === editState ? { ...d, ...response.data } : d
