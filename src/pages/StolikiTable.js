@@ -6,7 +6,7 @@ import Navbar from '../layout/Navbar';
 const StolikiTableModel = ({ data, setData, editState, setEditState }) => {
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get('http://31.179.139.182:690/api/tables');
+      const response = await axios.get('http://31.179.139.182:690/api/tables/restaurant/2');
       setData(response.data);
     } catch (error) {
       console.error('Error fetching model data:', error);

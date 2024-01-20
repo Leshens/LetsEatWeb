@@ -1,52 +1,102 @@
 import React, { useState, useEffect } from 'react';
-import Data from '../restaurantData.json';
-//import '../Table.css';
 import Navbar from '../layout/Navbar';
 import axios from 'axios';
 
-// Model
+// const getCoordinatesFromAddress = async (address) => {
+//   try {
+//     const apiKey = process.env.HERE_API_KEY;
+//     const apiUrl = `https://geocode.search.hereapi.com/v1/geocode?q=${encodeURIComponent(
+//       address
+//     )}&apiKey=${apiKey}`;
+
+//     const response = await axios.get(apiUrl);
+//     const data = response.data;
+
+//     if (data.items && data.items.length > 0) {
+//       const firstResult = data.items[0];
+//       const { position } = firstResult;
+//       return {
+//         latitude: position.lat,
+//         longitude: position.lng,
+//       };
+//     } else {
+//       console.error('Nie można znaleźć współrzędnych dla podanego adresu.');
+//       return null;
+//     }
+//   } catch (error) {
+//     console.error('Błąd podczas geokodowania:', error);
+//     return null;
+//   }
+// };
+
 const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
+  // const [coordinates, setCoordinates] = useState(null);
+
   const handleUpdate = async (event) => {
     event.preventDefault();
-    const restaurantName = event.target.elements.restaurantName.value;
-    const restaurantCategory = event.target.elements.restaurantCategory.value;
-    const openingHours = event.target.elements.openingHours.value;
-    const location = event.target.elements.location.value;
-    const phoneNumber = event.target.elements.phoneNumber.value;
-    const photoLink = event.target.elements.photoLink.value;
-    const websiteLink = event.target.elements.websiteLink.value;
-    const longitude = event.target.elements.longitude.value;
-    const latitude = event.target.elements.latitude.value;
-
+  
+    const formElements = [
+      'restaurantName',
+      'restaurantCategory',
+      'openingHours',
+      'location',
+      'phoneNumber',
+      'photoLink',
+      'websiteLink',
+      // 'longitude',
+      // 'latitude',
+    ];
+  
+    // Check if all form elements exist
+    const formValues = formElements.reduce((values, element) => {
+      const formElement = event.target.elements[element];
+  
+      if (formElement) {
+        values[element] = formElement.value;
+      } else {
+        console.error(`Form element ${element} is not available.`);
+      }
+  
+      return values;
+    }, {});
+  
     try {
-      const response = await axios.put(`http://31.179.139.182:690/api/restaurants/${editState}`, {
-        restaurantName,
-        restaurantCategory,
-        openingHours,
-        location,
-        phoneNumber,
-        photoLink,
-        websiteLink,
-        longitude,
-        latitude,
-      });
-
-      const updatedData = data.map((d) =>
-        d.id === editState ? { ...d, ...response.data } : d
-      );
-      setEditState(-1);
-      setData(updatedData);
+      // const locationCoordinates = await getCoordinatesFromAddress(formValues.location);
+  
+      // if (locationCoordinates) {
+        // setCoordinates(locationCoordinates);
+        //token = restaurant.token;
+        const token= '11a234v5678b99009'
+        const response = await axios.put(`http://31.179.139.182:690/api/restaurants/1`, formValues, {
+            headers: {
+              'Authorization': '11234567899009',
+              'Content-Type': 'application/json',  // Adjust content type if needed
+            },
+          });
+  
+        const updatedData = data.map((d) =>
+          d.id === editState ? { ...d, ...response.data } : d
+        );
+        setEditState(-1);
+        setData(updatedData);
+      // } else {
+      //   console.error('Błąd podczas uzyskiwania współrzędnych z adresu.');
+      // }
     } catch (error) {
       console.error('Error updating data:', error);
     }
   };
+  
 
   const handleEdit = (id) => {
     setEditState(id);
   };
 
-  return { handleUpdate, handleEdit };
+  return { handleUpdate, handleEdit, 
+    // coordinates
+   };
 };
+
 
 // View
 const AdminMenuView = ({ data, editState, handleUpdate, handleEdit, setData }) => (
@@ -111,35 +161,37 @@ const AdminMenuView = ({ data, editState, handleUpdate, handleEdit, setData }) =
               <th scope="col" className="px-6 py-4 bg-inBetween">
                 Action
               </th>
-            </thead>
-            {data.map((current) => (
-              editState === current.id ? (
-                <EditRestaurant current={current} data={data} setData={setData} key={current.id} />
-              ) : (
-                <tr className="" key={current.id}>
-                  <td className="px-6 py-4 bg-lightSecondary">{current.restaurantName}</td>
-                  <td className="px-6 py-4 bg-lightSecondary">{current.restaurantCategory}</td>
-                  <td className="px-6 py-4 bg-lightSecondary">{current.openingHours}</td>
-                  <td className="px-6 py-4 bg-lightSecondary">{current.location}</td>
-                  <td className="px-6 py-4 bg-lightSecondary">{current.phoneNumber}</td>
-                  <td className="px-6 py-4 bg-lightSecondary">
-                    <img src={current.photoLink} alt="" className="h-32"></img>
-                  </td>
-                  <td className="px-6 py-4 bg-lightSecondary">{current.websiteLink}</td>
-                  {/* <td className="px-6 py-4 bg-lightSecondary">{current.longitude}</td>
-                  <td className="px-6 py-4 bg-lightSecondary">{current.latitude}</td> */}
-                  <td className="px-6 py-4 bg-lightSecondary">
-                    <button
-                      type="button"
-                      className="edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2"
-                      onClick={() => handleEdit(current.id)}
-                    >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              )
-            ))}
+              </thead>
+              <tbody>
+                {data.map((restaurant) => (
+                  editState === restaurant.id ? (
+                    <EditRestaurant current={restaurant} data={data} setData={setData} key={restaurant.id} />
+                  ) : (
+                    <tr className="" key={restaurant.id}>
+                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.restaurantName}</td>
+                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.restaurantCategory}</td>
+                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.openingHours}</td>
+                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.location}</td>
+                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.phoneNumber}</td>
+                      <td className="px-6 py-4 bg-lightSecondary">
+                        <img src={restaurant.photoLink} alt="" className="h-32"></img>
+                      </td>
+                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.websiteLink}</td>
+                      {/* <td className="px-6 py-4 bg-lightSecondary">{restaurant.longitude}</td>
+                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.latitude}</td> */}
+                      <td className="px-6 py-4 bg-lightSecondary">
+                        <button
+                          type="button"
+                          className="edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2"
+                          onClick={() => handleEdit(restaurant.id)}
+                        >
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                ))}
+              </tbody>  
           </table>
         </form>
       </div>
@@ -149,31 +201,31 @@ const AdminMenuView = ({ data, editState, handleUpdate, handleEdit, setData }) =
 
 // Presenter
 const AdminMenuPresenter = () => {
-  const [data, setData] = useState(Data);
+  const [data, setData] = useState([]);
   const [editState, setEditState] = useState(-1);
 
   const { handleUpdate, handleEdit } = AdminMenuModel({ data, setData, editState, setEditState });
 
   useEffect(() => {
-    // Fetch data from the API using Axios when the component mounts
-    const fetchData = async (
-      // restaurantId
-      ) => {
-      // const token = 11234567899009;
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`http://31.179.139.182:690/api/restaurants`,{
-          // headers: {
-          //   'Authorization': `${token}`
-          // }
-        });
-        setData(response.data); // Assuming the response contains an array of restaurant data
+        const response = await axios.get('http://31.179.139.182:690/api/restaurants/token/11234567899009');
+  
+        if (Array.isArray(response.data)) {
+          setData(response.data);
+        } else if (response.data && typeof response.data === 'object') {
+          // Handle non-array data structure (assuming it's a single object)
+          setData([response.data]);
+        } else {
+          console.error('Invalid data structure from API:', response.data);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchData();
-  }, []); // The empty dependency array ensures that the effect runs only once on mount
+  }, []);
 
   return <AdminMenuView data={data} editState={editState} handleUpdate={handleUpdate} handleEdit={handleEdit} setData={setData} />;
 };
