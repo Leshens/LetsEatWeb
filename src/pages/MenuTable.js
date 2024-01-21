@@ -6,6 +6,7 @@ import axios from 'axios';
 
 // Model
 const MenuTableModel = ({ data, setData, editState, setEditState }) => {
+  
   const handleUpdate = async (event, current) => {
     event.preventDefault();
     const name = event.target.elements.name.value;
@@ -45,8 +46,9 @@ const MenuTableModel = ({ data, setData, editState, setEditState }) => {
   };
 
   const handleGetDish = async () => {
+    const restaurantId = localStorage.getItem('restaurantId');
     try {
-      const response = await axios.get('http://31.179.139.182:690/api/menus');
+      const response = await axios.get(`http://31.179.139.182:690/api/menus/restaurant/${restaurantId}`);
       setData(response.data);
     } catch (error) {
       console.error('Error fetching dishes:', error);
@@ -88,9 +90,9 @@ const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete
     </div>
 
     <div className="tableWrap flex items-center justify-center h-screen order-3">
-      <div>
-        <AddDish handleAdd={handleAdd} />
-        <form onSubmit={handleUpdate}>
+        <div>
+          <AddDish handleAdd={handleAdd} />
+          <form onSubmit={(event) => handleAddDish(event, handleAdd)}>
           {/* przerwa */}
           <div className="h-10 w-10"></div>
 
@@ -109,13 +111,13 @@ const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete
               </tr>
             </thead>
             {data.map((current) => (
-              editState === current.id ? (
-                <EditDish current={current} key={current.id} data={data} setData={setData} handleUpdate={handleUpdate} />
-              ) : (
-                <tr key={current.id}>
-                  <td className="px-6 py-4 bg-lightSecondary">{current.name}</td>
-                  <td className="px-6 py-4 bg-lightSecondary">{current.price}</td>
-                  <td className="px-6 py-4 bg-lightSecondary">
+                editState === current.id ? (
+                  <EditDish key={current.id} current={current} data={data} setData={setData} handleUpdate={handleUpdate} />
+                ) : (
+                  <tr key={current.id}>
+                    <td className="px-6 py-4 bg-lightSecondary">{current.name}</td>
+                    <td className="px-6 py-4 bg-lightSecondary">{current.price}</td>
+                    <td className="px-6 py-4 bg-lightSecondary">
                     <button
                       type="button"
                       className="edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2"
@@ -186,7 +188,7 @@ function EditDish({ current, data, setData, handleUpdate }) {
         <input type="text" className="w-52 py-4 bg-green-100" onChange={handleName} value={current.name} name="name" placeholder="Wpisz nazwę" />
       </td>
       <td>
-        <input type="text" className="w-24 py-4 bg-green-100" onChange={handlePrice} value={current.price} name="price" placeholder="Wpisz cenę" />
+        <input type="float" className="w-24 py-4 bg-green-100" onChange={handlePrice} value={current.price} name="price" placeholder="Wpisz cenę" />
       </td>
       <td>
         <button
@@ -200,6 +202,20 @@ function EditDish({ current, data, setData, handleUpdate }) {
     </tr>
   );
 }
+
+const handleAddDish = async (event, handleAdd) => {
+  event.preventDefault();
+
+  const name = event.target.elements.name.value;
+  const price = event.target.elements.price.value;
+
+  const newDish = {
+    name,
+    price,
+  };
+
+  handleAdd(newDish);
+};
 
 function AddDish({ handleAdd }) {
   const nameRef = useRef();
@@ -222,9 +238,10 @@ function AddDish({ handleAdd }) {
   }
 return(
   <form className='addForm flex flex-row items-center justify-center order-2' onSubmit={handleValues}>
-      <input type="text" className="w-40 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="name" placeholder="Wpisz nazwę" ref={nameRef}/>
-      <input type="text" className="w-24 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="price" placeholder="Podaj cenę" ref={priceRef}/>
-      <button className='add text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-6 py-2'>Add</button>
-  </form>
+  <input type="text" className="w-40 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="name" placeholder="Wpisz nazwę" ref={nameRef}/>
+  <input type="text" className="w-24 text-center focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3" name="price" placeholder="Podaj cenę" ref={priceRef}/>
+  <button className='add text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-6 py-2' type="submit">Add</button>
+</form>
 )
 }
+
