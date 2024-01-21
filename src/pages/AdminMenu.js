@@ -4,7 +4,6 @@ import axios from 'axios';
 
 //Admin Model
 const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
-  // const [coordinates, setCoordinates] = useState(null);
 
   const handleUpdate = async (event) => {
     event.preventDefault();

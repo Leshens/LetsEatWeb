@@ -4,10 +4,8 @@ import { Link} from 'react-router-dom';
 import { Formik } from "formik";
 import Dropdown from "./Dropdown";
 import axios from 'axios';
-import { useState } from 'react';
 
 export default function RestaurantForm() {
-    const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
     const options = [
         { value: "ITALIAN", label: "Włoskie" },
         { value: "CHINESE", label: "Chińskie" },
