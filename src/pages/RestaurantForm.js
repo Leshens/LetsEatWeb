@@ -1,5 +1,6 @@
 import '../App.css';
 import logo from '../img/logoLE2.png';
+import { Link} from 'react-router-dom';
 import { Formik } from "formik";
 import Dropdown from "./Dropdown";
 import axios from 'axios';
@@ -15,11 +16,14 @@ export default function RestaurantForm() {
         { value: "FRENCH", label: "Francuskie" },
         { value: "OTHER", label: "Inne" },
     ];
-
+    const token = localStorage.getItem('token');
+    console.log("user.uid",token);
     const handleFormSubmit = async (values) => {
         try {
+            console.log('Data to be sent to the database:', values);
             const response = await axios.post('http://31.179.139.182:690/api/restaurants', values);
             console.log('Restaurant added successfully:', response.data);
+            
         } catch (error) {
             console.error('Error adding restaurant:', error);
         }
@@ -45,10 +49,11 @@ export default function RestaurantForm() {
             <div className="border-primary border-2 rounded-3xl px-12 flex">
                 <Formik
                     initialValues={{
+                        'token':token,
                         'restaurantName': '',
                         'restaurantCategory': '',
                         'openingHours': '',
-                        'adress': '',
+                        'location': '',
                         'phoneNumber': '',
                         'photoLink': '',
                         'websiteLink': '',
@@ -69,13 +74,14 @@ export default function RestaurantForm() {
                             />
                             <br></br>
                             <div className="Dropdown text-secondary">
-                                <Dropdown
-                                    isMulti
-                                    placeHolder="Wybierz Rodzaj Restauracji..."
-                                    options={options}
-                                    value={values['restaurantCategory']}
-                                    onChange={(selectedOption) => handleChange({ target: { name: 'restaurantCategory', value: selectedOption } })}
-                                />
+                            <Dropdown
+                                placeHolder="Wybierz Rodzaj Restauracji..."
+                                options={options}
+                                value={values['restaurantCategory']}
+                                onChange={(selectedValue) => {
+                                    handleChange({ target: { name: 'restaurantCategory', value: selectedValue } });
+                                }}
+                            />
                             </div>
                             <br></br>
                             <input
@@ -89,10 +95,10 @@ export default function RestaurantForm() {
                             <br></br>
                             <input
                                 type="string"
-                                name="adress"
+                                name="location"
                                 placeholder="adres"
                                 className="form-control"
-                                value={values['adress']}
+                                value={values['location']}
                                 onChange={handleChange}
                             />
                             <br></br>
@@ -125,13 +131,15 @@ export default function RestaurantForm() {
                             <br></br>
 
                             <div className="h-10 w-10"></div>
-
+                            
                             <button
                                 type="button"
                                 className="bg-primary text-black lg:px-12 md:px-10 sm:px-10 sx:px-10 lg:p-4 md:p-3 sm:p-3 sx:p-3 lg:text-xl md:text-lg sm:text-lg sx:text-lg rounded-full font-extrabold"
                                 onClick={handleSubmit}
                             >
-                                Zakończ
+                                 <Link to="/AdminMenu" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    Zakończ
+                                </Link>
                             </button>
 
                             <div className="h-11 w-10"></div>
