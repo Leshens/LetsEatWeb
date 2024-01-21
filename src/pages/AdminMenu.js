@@ -29,6 +29,7 @@ import axios from 'axios';
 //   }
 // };
 
+//Admin Model
 const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
   // const [coordinates, setCoordinates] = useState(null);
 
@@ -36,6 +37,7 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
     event.preventDefault();
   
     const formElements = [
+      'token',
       'restaurantName',
       'restaurantCategory',
       'openingHours',
@@ -43,8 +45,8 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
       'phoneNumber',
       'photoLink',
       'websiteLink',
-      // 'longitude',
-      // 'latitude',
+      'longitude',
+      'latitude',
     ];
   
     // Check if all form elements exist
@@ -59,15 +61,15 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
   
       return values;
     }, {});
-  
+    const id = localStorage.getItem('restaurantId');
     try {
       // const locationCoordinates = await getCoordinatesFromAddress(formValues.location);
   
       // if (locationCoordinates) {
         // setCoordinates(locationCoordinates);
-        const response = await axios.patch(`http://31.179.139.182:690/api/restaurants/1`, formValues, {
+        const response = await axios.patch(`http://31.179.139.182:690/api/restaurants/${id}`, formValues, {
             headers: {
-              'Authorization': '11234567899009',
+              'Authorization': localStorage.getItem('token'),
               'Content-Type': 'application/json',  // Adjust content type if needed
             },
           });
@@ -80,6 +82,7 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
         );
         setEditState(-1);
         setData(updatedData);
+        localStorage.setItem('restaurantId', updatedData.restaurantId);
       // } else {
       //   console.error('Błąd podczas uzyskiwania współrzędnych z adresu.');
       // }
@@ -132,6 +135,9 @@ const AdminMenuView = ({ data, editState, handleUpdate, handleEdit, setData }) =
         <form onSubmit={handleUpdate}>
           <table className="border-primary border-b-2 border-collapse text-2xl text-center shadow-md">
             <thead className="text-secondary border-primary border-b-2">
+            <th scope="col" className="px-6 py-4 bg-inBetween">
+                Token
+              </th>
               <th scope="col" className="px-6 py-4 bg-inBetween">
                 Nazwa
               </th>
@@ -153,12 +159,12 @@ const AdminMenuView = ({ data, editState, handleUpdate, handleEdit, setData }) =
               <th scope="col" className="px-6 py-4 bg-inBetween">
                 Strona
               </th>
-              {/* <th scope="col" className="px-6 py-4 bg-inBetween">
+              <th scope="col" className="px-6 py-4 bg-inBetween">
                 Długość<br></br>geograficzna
               </th>
               <th scope="col" className="px-6 py-4 bg-inBetween">
                 Szerokość<br></br>geograficzna
-              </th> */}
+              </th>
               <th scope="col" className="px-6 py-4 bg-inBetween">
                 Action
               </th>
@@ -169,6 +175,7 @@ const AdminMenuView = ({ data, editState, handleUpdate, handleEdit, setData }) =
                     <EditRestaurant current={restaurant} data={data} setData={setData} key={restaurant.id} />
                   ) : (
                     <tr className="" key={restaurant.id}>
+                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.token}</td>
                       <td className="px-6 py-4 bg-lightSecondary">{restaurant.restaurantName}</td>
                       <td className="px-6 py-4 bg-lightSecondary">{restaurant.restaurantCategory}</td>
                       <td className="px-6 py-4 bg-lightSecondary">{restaurant.openingHours}</td>
@@ -178,8 +185,8 @@ const AdminMenuView = ({ data, editState, handleUpdate, handleEdit, setData }) =
                         <img src={restaurant.photoLink} alt="" className="h-32"></img>
                       </td>
                       <td className="px-6 py-4 bg-lightSecondary">{restaurant.websiteLink}</td>
-                      {/* <td className="px-6 py-4 bg-lightSecondary">{restaurant.longitude}</td>
-                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.latitude}</td> */}
+                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.longitude}</td>
+                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.latitude}</td>
                       <td className="px-6 py-4 bg-lightSecondary">
                         <button
                           type="button"
@@ -209,14 +216,17 @@ const AdminMenuPresenter = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = localStorage.getItem('token');
+      console.log("user.uid",token);
       try {
-        const response = await axios.get('http://31.179.139.182:690/api/restaurants/token/11234567899009');
-  
+        const response = await axios.get(`http://31.179.139.182:690/api/restaurants/token/${token}`);
+
         if (Array.isArray(response.data)) {
           setData(response.data);
         } else if (response.data && typeof response.data === 'object') {
           // Handle non-array data structure (assuming it's a single object)
           setData([response.data]);
+          localStorage.setItem('restaurantId', response.data.restaurantId);
         } else {
           console.error('Invalid data structure from API:', response.data);
         }
@@ -234,6 +244,14 @@ const AdminMenuPresenter = () => {
 export default AdminMenuPresenter;
 
 function EditRestaurant({ current, data, setData }) {
+  
+
+  function handleToken(event) {
+    const token = event.target.value;
+    const updatedData = data.map((d) => (d.id === current.id ? { ...d, token: token } : d));
+    setData(updatedData);
+  }
+
   function handleRestaurantName(event) {
     const restaurantName = event.target.value;
     const updatedData = data.map((d) => (d.id === current.id ? { ...d, restaurantName: restaurantName } : d));
@@ -274,19 +292,20 @@ function EditRestaurant({ current, data, setData }) {
     const updatedData = data.map((d) => (d.id === current.id ? { ...d, websiteLink: websiteLink } : d));
     setData(updatedData);
   }
-  // function handleLongitude(event) {
-  //   const longitude = event.target.value;
-  //   const updatedData = data.map((d) => (d.id === current.id ? { ...d, longitude: longitude } : d));
-  //   setData(updatedData);
-  // }
-  // function handleLatitude(event) {
-  //   const latitude = event.target.value;
-  //   const updatedData = data.map((d) => (d.id === current.id ? { ...d, latitude: latitude } : d));
-  //   setData(updatedData);
-  // }
+  function handleLongitude(event) {
+    const longitude = event.target.value;
+    const updatedData = data.map((d) => (d.id === current.id ? { ...d, longitude: longitude } : d));
+    setData(updatedData);
+  }
+  function handleLatitude(event) {
+    const latitude = event.target.value;
+    const updatedData = data.map((d) => (d.id === current.id ? { ...d, latitude: latitude } : d));
+    setData(updatedData);
+  }
 
   return (
     <tr className='bg-green-100'>
+      <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleToken} value={current.token} name="token" placeholder="Wpisz nazwę" disabled /></td>
       <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleRestaurantName} value={current.restaurantName} name="restaurantName" placeholder="Wpisz nazwę" /></td>
       <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleRestaurantCategory} value={current.restaurantCategory} name="restaurantCategory" placeholder="Wpisz kategorię restauracji" /></td>
       <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleOpeningHours} value={current.openingHours} name="openingHours" placeholder="Podaj godziny otwarcia" /></td>
@@ -294,8 +313,8 @@ function EditRestaurant({ current, data, setData }) {
       <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handlePhoneNumber} value={current.phoneNumber} name="phoneNumber" placeholder="Podaj numer telefonu" /></td>
       <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handlePhotoLink} value={current.photoLink} name="photoLink" placeholder="Podaj link do zdjęcia" /></td>
       <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleWebsiteLink} value={current.websiteLink} name="websiteLink" placeholder="Podaj link do strony restauracji" /></td>
-      {/* <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleLongitude} value={current.longitude} name="longitude" placeholder="Podaj długość geograficzną restauracji" /></td>
-      <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleLatitude} value={current.latitude} name="latitude" placeholder="Podaj szerokość geograficzną restauracji" /></td> */}
+      <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleLongitude} value={current.longitude} name="longitude" placeholder="Podaj długość geograficzną restauracji" disabled  /></td>
+      <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleLatitude} value={current.latitude} name="latitude" placeholder="Podaj szerokość geograficzną restauracji" disabled  /></td>
       <td><button type='submit' className='edit text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2'>Update</button></td>
     </tr>
   )
