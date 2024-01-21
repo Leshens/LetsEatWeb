@@ -4,8 +4,10 @@ import { Link} from 'react-router-dom';
 import { Formik } from "formik";
 import Dropdown from "./Dropdown";
 import axios from 'axios';
+import { useState } from 'react';
 
 export default function RestaurantForm() {
+    const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
     const options = [
         { value: "ITALIAN", label: "Włoskie" },
         { value: "CHINESE", label: "Chińskie" },
@@ -20,10 +22,29 @@ export default function RestaurantForm() {
     console.log("user.uid",token);
     const handleFormSubmit = async (values) => {
         try {
-            console.log('Data to be sent to the database:', values);
-            const response = await axios.post('http://31.179.139.182:690/api/restaurants', values);
-            console.log('Restaurant added successfully:', response.data);
-            
+            // Use Google Maps Geocoding API to get coordinates
+            const geocodingResponse = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+                params: {
+                    address: values.location,
+                    key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, // Replace with your API key
+                },
+            });
+
+            // Extract latitude and longitude from the API response
+            const { results } = geocodingResponse.data;
+            const locationCoordinates = results[0]?.geometry?.location;
+
+            if (locationCoordinates) {
+                // Update the values object with latitude and longitude
+                values.latitude = locationCoordinates.lat;
+                values.longitude = locationCoordinates.lng;
+
+                // Now, you can send the updated values to your database
+                const response = await axios.post('http://31.179.139.182:690/api/restaurants', values);
+                console.log('Restaurant added successfully:', response.data);
+            } else {
+                console.error('Unable to get coordinates from the address');
+            }
         } catch (error) {
             console.error('Error adding restaurant:', error);
         }

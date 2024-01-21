@@ -160,10 +160,10 @@ const AdminMenuView = ({ data, editState, handleUpdate, handleEdit, setData }) =
                 Strona
               </th>
               <th scope="col" className="px-6 py-4 bg-inBetween">
-                Długość<br></br>geograficzna
+                Szerokość<br></br>geograficzna
               </th>
               <th scope="col" className="px-6 py-4 bg-inBetween">
-                Szerokość<br></br>geograficzna
+                Długość<br></br>geograficzna
               </th>
               <th scope="col" className="px-6 py-4 bg-inBetween">
                 Action
@@ -185,8 +185,8 @@ const AdminMenuView = ({ data, editState, handleUpdate, handleEdit, setData }) =
                         <img src={restaurant.photoLink} alt="" className="h-32"></img>
                       </td>
                       <td className="px-6 py-4 bg-lightSecondary">{restaurant.websiteLink}</td>
-                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.longitude}</td>
                       <td className="px-6 py-4 bg-lightSecondary">{restaurant.latitude}</td>
+                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.longitude}</td>
                       <td className="px-6 py-4 bg-lightSecondary">
                         <button
                           type="button"
@@ -313,8 +313,8 @@ function EditRestaurant({ current, data, setData }) {
       <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handlePhoneNumber} value={current.phoneNumber} name="phoneNumber" placeholder="Podaj numer telefonu" /></td>
       <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handlePhotoLink} value={current.photoLink} name="photoLink" placeholder="Podaj link do zdjęcia" /></td>
       <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleWebsiteLink} value={current.websiteLink} name="websiteLink" placeholder="Podaj link do strony restauracji" /></td>
-      <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleLongitude} value={current.longitude} name="longitude" placeholder="Podaj długość geograficzną restauracji" disabled  /></td>
       <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleLatitude} value={current.latitude} name="latitude" placeholder="Podaj szerokość geograficzną restauracji" disabled  /></td>
+      <td><input type="text" className="w-40 py-4 bg-green-100" onChange={handleLongitude} value={current.longitude} name="longitude" placeholder="Podaj długość geograficzną restauracji" disabled  /></td>
       <td><button type='submit' className='edit text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2'>Update</button></td>
     </tr>
   )
