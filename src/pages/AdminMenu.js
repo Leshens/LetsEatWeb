@@ -2,40 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../layout/Navbar';
 import axios from 'axios';
 
-// const getCoordinatesFromAddress = async (address) => {
-//   try {
-//     const apiKey = process.env.HERE_API_KEY;
-//     const apiUrl = `https://geocode.search.hereapi.com/v1/geocode?q=${encodeURIComponent(
-//       address
-//     )}&apiKey=${apiKey}`;
-
-//     const response = await axios.get(apiUrl);
-//     const data = response.data;
-
-//     if (data.items && data.items.length > 0) {
-//       const firstResult = data.items[0];
-//       const { position } = firstResult;
-//       return {
-//         latitude: position.lat,
-//         longitude: position.lng,
-//       };
-//     } else {
-//       console.error('Nie można znaleźć współrzędnych dla podanego adresu.');
-//       return null;
-//     }
-//   } catch (error) {
-//     console.error('Błąd podczas geokodowania:', error);
-//     return null;
-//   }
-// };
-
 //Admin Model
 const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
   // const [coordinates, setCoordinates] = useState(null);
 
   const handleUpdate = async (event) => {
     event.preventDefault();
-  
+    
     const formElements = [
       'token',
       'restaurantName',
@@ -48,34 +21,43 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
       'longitude',
       'latitude',
     ];
-  
-    // Check if all form elements exist
+    
     const formValues = formElements.reduce((values, element) => {
       const formElement = event.target.elements[element];
-  
+    
       if (formElement) {
         values[element] = formElement.value;
       } else {
         console.error(`Form element ${element} is not available.`);
       }
-  
+    
       return values;
     }, {});
     const id = localStorage.getItem('restaurantId');
     try {
-      // const locationCoordinates = await getCoordinatesFromAddress(formValues.location);
+      const geocodingResponse = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+        params: {
+          address: formValues.location,
+          key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        },
+      });
   
-      // if (locationCoordinates) {
-        // setCoordinates(locationCoordinates);
+      const { results } = geocodingResponse.data;
+      const locationCoordinates = results[0]?.geometry?.location;
+  
+      if (locationCoordinates) {
+        formValues.latitude = locationCoordinates.lat;
+        formValues.longitude = locationCoordinates.lng;
+  
         const response = await axios.patch(`http://31.179.139.182:690/api/restaurants/${id}`, formValues, {
-            headers: {
-              'Authorization': localStorage.getItem('token'),
-              'Content-Type': 'application/json',  // Adjust content type if needed
-            },
-          });
-
-          console.log('Form Values:', formValues);
-          console.log('API Response:', response.data);
+          headers: {
+            'Authorization': localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        console.log('Form Values:', formValues);
+        console.log('API Response:', response.data);
   
         const updatedData = data.map((d) =>
           d.id === editState ? { ...d, ...response.data } : d
@@ -83,9 +65,9 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
         setEditState(-1);
         setData(updatedData);
         localStorage.setItem('restaurantId', updatedData.restaurantId);
-      // } else {
-      //   console.error('Błąd podczas uzyskiwania współrzędnych z adresu.');
-      // }
+      } else {
+        console.error('Unable to get coordinates from the address');
+      }
     } catch (error) {
       console.error('Error updating data:', error);
     }
