@@ -11,9 +11,9 @@ const MenuTableModel = ({ data, setData, editState, setEditState }) => {
     event.preventDefault();
     const name = event.target.elements.name.value;
     const price = event.target.elements.price.value;
-
+    const serverIP = process.env.REACT_APP_SERVER_IP
     try {
-      const response = await axios.patch(`http://31.179.139.182:690/api/menus/${current.id}`, { name, price });
+      const response = await axios.patch(`${serverIP}/menus/${current.id}`, { name, price });
       const updatedData = data.map((d) => (d.id === current.id ? response.data : d));
       setEditState(-1);
       setData(updatedData);
@@ -28,8 +28,9 @@ const MenuTableModel = ({ data, setData, editState, setEditState }) => {
 
   const handleDelete = async (id) => {
     const token = localStorage.getItem('token');
+    const serverIP = process.env.REACT_APP_SERVER_IP
     try {
-      await axios.delete(`http://31.179.139.182:690/api/menus/${id}`, {
+      await axios.delete(`${serverIP}/menus/${id}`, {
         headers: {
           Authorization: `${token}`,
         },
@@ -43,9 +44,10 @@ const MenuTableModel = ({ data, setData, editState, setEditState }) => {
   };
 
   const handleAdd = async (newDish) => {
+    const serverIP = process.env.REACT_APP_SERVER_IP
     try {
       console.log('Adding dish:', newDish);
-      const response = await axios.post('http://31.179.139.182:690/api/menus', newDish);
+      const response = await axios.post(`${serverIP}/menus`, newDish);
       console.log('Response:', response.data);
       setData((prevData) => [...prevData, response.data]);
     } catch (error) {
@@ -56,8 +58,9 @@ const MenuTableModel = ({ data, setData, editState, setEditState }) => {
 
   const handleGetDish = async () => {
     const restaurantId = localStorage.getItem('restaurantId');
+    const serverIP = process.env.REACT_APP_SERVER_IP
     try {
-      const response = await axios.get(`http://31.179.139.182:690/api/menus/restaurant/${restaurantId}`);
+      const response = await axios.get(`${serverIP}/menus/restaurant/${restaurantId}`);
       setData(response.data);
     } catch (error) {
       console.error('Error fetching dishes:', error);
