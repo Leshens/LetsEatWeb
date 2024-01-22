@@ -77,9 +77,7 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
     setEditState(id);
   };
 
-  return { handleUpdate, handleEdit, 
-    // coordinates
-   };
+  return { handleUpdate, handleEdit};
 };
 
 

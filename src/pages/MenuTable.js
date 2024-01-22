@@ -27,9 +27,15 @@ const MenuTableModel = ({ data, setData, editState, setEditState }) => {
   };
 
   const handleDelete = async (id) => {
+    const token = localStorage.getItem('token');
     try {
-      await axios.delete(`http://31.179.139.182:690/api/menus/${id}`);
-      const updatedData = data.filter((d) => id !== d.id);
+      await axios.delete(`http://31.179.139.182:690/api/menus/${id}`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+
+      const updatedData = data.filter((d) => d.menuId !== id);
       setData(updatedData);
     } catch (error) {
       console.error('Error deleting dish:', error);
@@ -38,12 +44,15 @@ const MenuTableModel = ({ data, setData, editState, setEditState }) => {
 
   const handleAdd = async (newDish) => {
     try {
+      console.log('Adding dish:', newDish);
       const response = await axios.post('http://31.179.139.182:690/api/menus', newDish);
+      console.log('Response:', response.data);
       setData((prevData) => [...prevData, response.data]);
     } catch (error) {
       console.error('Error adding dish:', error);
     }
   };
+  
 
   const handleGetDish = async () => {
     const restaurantId = localStorage.getItem('restaurantId');
@@ -111,24 +120,24 @@ const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete
               </tr>
             </thead>
             {data.map((current) => (
-                editState === current.id ? (
-                  <EditDish key={current.id} current={current} data={data} setData={setData} handleUpdate={handleUpdate} />
+                editState === current.menuId ? (
+                  <EditDish key={current.menuId} current={current} data={data} setData={setData} handleUpdate={handleUpdate} />
                 ) : (
-                  <tr key={current.id}>
+                  <tr key={current.menuId}>
                     <td className="px-6 py-4 bg-lightSecondary">{current.name}</td>
                     <td className="px-6 py-4 bg-lightSecondary">{current.price}</td>
                     <td className="px-6 py-4 bg-lightSecondary">
                     <button
                       type="button"
                       className="edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2"
-                      onClick={() => handleEdit(current.id)}
+                      onClick={() => handleEdit(current.menuId)}
                     >
                       Edit
                     </button>
                     <button
                       type="button"
                       className="delete text-white hover:text-primary bg-red-500 hover:bg-pink-900 rounded-full px-4 py-2"
-                      onClick={() => handleDelete(current.id)}
+                      onClick={() => handleDelete(current.menuId)}
                     >
                       Delete
                     </button>
@@ -229,6 +238,8 @@ function AddDish({ handleAdd }) {
     const newDish = {
       name,
       price,
+      restaurantId: localStorage.getItem('restaurantId'),
+      token:localStorage.getItem('token'),
     };
 
     handleAdd(newDish);
