@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./layout/Navbar";
+import Footer from "./layout/Footer";
 import HomePresenter from "./pages/Home";
 import LoginPresenter from "./pages/Login";
 import SignupPresenter from "./pages/SignUp";
@@ -14,7 +15,7 @@ export default function App() {
   const userInLocalStorage = localStorage.getItem("user");
 
   return (
-    <div className="App">
+    <div className="App bg-gradient-to-b from-white to-teal-200">
       <BrowserRouter>
         <Routes>
           {userInLocalStorage ? (
@@ -36,6 +37,7 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <Footer/>
     </div>
   );
 }
