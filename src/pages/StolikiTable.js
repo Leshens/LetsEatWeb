@@ -5,8 +5,9 @@ import Navbar from '../layout/Navbar';
 // Model dla Stolików
 const StolikiTableModel = ({ data, setData, editState, setEditState }) => {
   const fetchData = useCallback(async () => {
+    const id = localStorage.getItem('restaurantId');
     try {
-      const response = await axios.get('http://31.179.139.182:690/api/tables/restaurant/2');
+      const response = await axios.get(`http://31.179.139.182:690/api/tables/restaurant/${id}`);
       setData(response.data);
     } catch (error) {
       console.error('Error fetching model data:', error);
@@ -19,8 +20,7 @@ const StolikiTableModel = ({ data, setData, editState, setEditState }) => {
 
   const handleDelete = async (id) => {
     try {
-      const token = 11234567899009;
-      //const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token');
       const deleteUrl = `http://31.179.139.182:690/api/tables/${id}`;
       await axios.delete(deleteUrl, {
         headers: {
@@ -37,10 +37,8 @@ const StolikiTableModel = ({ data, setData, editState, setEditState }) => {
 
   const handleAddTableSubmit = async (size) => {
     try {
-      const token = 11234567899009;
-      const restaurantId = 1;
-      // const token = localStorage.getItem('token');
-      // const restaurantId = localStorage.getItem('restaurantId');
+      const token = localStorage.getItem('token');
+      const restaurantId = localStorage.getItem('restaurantId');
 
       const postData = {
         token,
@@ -146,9 +144,9 @@ const StolikiTablePresenter = () => {
   const [editState, setEditState] = useState(-1);
 
   const stolikiTableModel = StolikiTableModel({ data, setData, editState, setEditState });
-
+  const id = localStorage.getItem('restaurantId');
   useEffect(() => {
-    axios.get('http://31.179.139.182:690/api/tables')
+    axios.get(`http://31.179.139.182:690/api/tables/restaurant/${id}`)
       .then(response => setData(response.data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);

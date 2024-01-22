@@ -127,13 +127,13 @@ const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete
                     <td className="px-6 py-4 bg-lightSecondary">{current.name}</td>
                     <td className="px-6 py-4 bg-lightSecondary">{current.price}</td>
                     <td className="px-6 py-4 bg-lightSecondary">
-                    <button
+                    {/* <button
                       type="button"
                       className="edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2"
                       onClick={() => handleEdit(current.menuId)}
                     >
                       Edit
-                    </button>
+                    </button> */}
                     <button
                       type="button"
                       className="delete text-white hover:text-primary bg-red-500 hover:bg-pink-900 rounded-full px-4 py-2"
@@ -255,4 +255,3 @@ return(
 </form>
 )
 }
-
