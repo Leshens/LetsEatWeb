@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../layout/Navbar';
+import Footer from '../layout/Footer';
 import '../App.css';
 import AppStore from '../img/AppStore.png';
 import GooglePlay from '../img/GooglePlay.png';
@@ -71,6 +72,7 @@ const HomeView = ({ onLoginClick, onSignupClick }) => (
       </Link>
     </div>
   </div>
+
 );
 
 // Presenter
