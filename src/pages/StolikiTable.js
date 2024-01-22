@@ -6,8 +6,9 @@ import Navbar from '../layout/Navbar';
 const StolikiTableModel = ({ data, setData, editState, setEditState }) => {
   const fetchData = useCallback(async () => {
     const id = localStorage.getItem('restaurantId');
+    const serverIP = process.env.REACT_APP_SERVER_IP
     try {
-      const response = await axios.get(`http://31.179.139.182:690/api/tables/restaurant/${id}`);
+      const response = await axios.get(`${serverIP}/tables/restaurant/${id}`);
       setData(response.data);
     } catch (error) {
       console.error('Error fetching model data:', error);
@@ -19,9 +20,10 @@ const StolikiTableModel = ({ data, setData, editState, setEditState }) => {
   }, [fetchData]);
 
   const handleDelete = async (id) => {
+    const serverIP = process.env.REACT_APP_SERVER_IP
     try {
       const token = localStorage.getItem('token');
-      const deleteUrl = `http://31.179.139.182:690/api/tables/${id}`;
+      const deleteUrl = `${serverIP}/tables/${id}`;
       await axios.delete(deleteUrl, {
         headers: {
           'Authorization': `${token}`
@@ -48,8 +50,8 @@ const StolikiTableModel = ({ data, setData, editState, setEditState }) => {
 
       // Log the data before making the POST request
       console.log('POST Data:', postData);
-
-      await axios.post('http://31.179.139.182:690/api/tables', postData);
+      const serverIP = process.env.REACT_APP_SERVER_IP
+      await axios.post(`${serverIP}/tables`, postData);
 
       fetchData();
     } catch (error) {
@@ -146,7 +148,8 @@ const StolikiTablePresenter = () => {
   const stolikiTableModel = StolikiTableModel({ data, setData, editState, setEditState });
   const id = localStorage.getItem('restaurantId');
   useEffect(() => {
-    axios.get(`http://31.179.139.182:690/api/tables/restaurant/${id}`)
+    const serverIP = process.env.REACT_APP_SERVER_IP
+    axios.get(`${serverIP}/tables/restaurant/${id}`)
       .then(response => setData(response.data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
