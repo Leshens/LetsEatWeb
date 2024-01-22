@@ -32,9 +32,10 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
     
       return values;
     }, {});
-    const id = localStorage.getItem('restaurantId');
+    
     try {
-      const geocodingResponse = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+      const googleIp = process.env.REACT_APP_GOOGLE_GEOCODE_IP
+      const geocodingResponse = await axios.get(`${googleIp}`, {
         params: {
           address: formValues.location,
           key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -47,8 +48,14 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
       if (locationCoordinates) {
         formValues.latitude = locationCoordinates.lat;
         formValues.longitude = locationCoordinates.lng;
-  
-        const response = await axios.patch(`http://31.179.139.182:690/api/restaurants/${id}`, formValues, {
+
+        // Add restaurantId to the formValues
+        formValues.restaurantId = localStorage.getItem('restaurantId');
+
+        const id = localStorage.getItem('restaurantId');
+        const serverIP = process.env.REACT_APP_SERVER_IP
+        console.log('Form Values:', formValues);
+        const response = await axios.patch(`${serverIP}/restaurants/${id}`, formValues, {
           headers: {
             'Authorization': localStorage.getItem('token'),
             'Content-Type': 'application/json',
@@ -63,14 +70,13 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
         );
         setEditState(-1);
         setData(updatedData);
-        localStorage.setItem('restaurantId', updatedData.restaurantId);
       } else {
         console.error('Unable to get coordinates from the address');
       }
     } catch (error) {
       console.error('Error updating data:', error);
     }
-  };
+};
   
 
   const handleEdit = (id) => {
@@ -84,7 +90,7 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
 // View
 const AdminMenuView = ({ data, editState, handleUpdate, handleEdit, setData }) => (
   <div className="body">
-    {/* przerwa */}
+
     <div className="h-10 w-10"></div>
 
     <Navbar />
@@ -92,18 +98,16 @@ const AdminMenuView = ({ data, editState, handleUpdate, handleEdit, setData }) =
     <div className="flex flex-col items-center justify-center">
       <h2 className="text-center text-3xl text-secondary font-semibold">Panel administratora</h2>
 
-      {/* przerwa */}
       <div className="h-4 w-10"></div>
 
-      {/* Main text */}
       <div className="inline-flex items-center justify-center">
         <div className="bg-primary h-three w-28 inline-flex order-1"></div>
-        {/* przerwa */}
+    
         <div className="h-10 w-8 inline-flex order-2"></div>
         <h3 className="text-center text-3xl text-secondary font-semibold inline-flex order-3">
           Dane restauracji
         </h3>
-        {/* przerwa */}
+      
         <div className="h-10 w-8 inline-flex order-4"></div>
         <div className="bg-primary h-three w-28 inline-flex order-5"></div>
       </div>
@@ -198,12 +202,12 @@ const AdminMenuPresenter = () => {
       const token = localStorage.getItem('token');
       console.log("user.uid",token);
       try {
-        const response = await axios.get(`http://31.179.139.182:690/api/restaurants/token/${token}`);
+        const serverIP = process.env.REACT_APP_SERVER_IP
+        const response = await axios.get(`${serverIP}/restaurants/token/${token}`);
 
         if (Array.isArray(response.data)) {
           setData(response.data);
         } else if (response.data && typeof response.data === 'object') {
-          // Handle non-array data structure (assuming it's a single object)
           setData([response.data]);
           localStorage.setItem('restaurantId', response.data.restaurantId);
         } else {
