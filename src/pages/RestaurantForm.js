@@ -21,7 +21,8 @@ export default function RestaurantForm() {
     const handleFormSubmit = async (values) => {
         try {
             // Use Google Maps Geocoding API to get coordinates
-            const geocodingResponse = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+            const googleIp = process.env.REACT_APP_GOOGLE_GEOCODE_IP
+            const geocodingResponse = await axios.get(`${googleIp}`, {
                 params: {
                     address: values.location,
                     key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, // Replace with your API key
@@ -38,7 +39,8 @@ export default function RestaurantForm() {
                 values.longitude = locationCoordinates.lng;
 
                 // Now, you can send the updated values to your database
-                const response = await axios.post('http://31.179.139.182:690/api/restaurants', values);
+                const serverIP = process.env.REACT_APP_SERVER_IP
+                const response = await axios.post(`${serverIP}/restaurants`, values);
                 console.log('Restaurant added successfully:', response.data);
             } else {
                 console.error('Unable to get coordinates from the address');
