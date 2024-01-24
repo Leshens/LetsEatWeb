@@ -49,7 +49,6 @@ const AdminMenuModel = ({ data, setData, editState, setEditState }) => {
         formValues.latitude = locationCoordinates.lat;
         formValues.longitude = locationCoordinates.lng;
 
-        // Add restaurantId to the formValues
         formValues.restaurantId = localStorage.getItem('restaurantId');
 
         const id = localStorage.getItem('restaurantId');
