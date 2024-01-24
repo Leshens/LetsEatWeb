@@ -80,23 +80,20 @@ const MenuTableModel = ({ data, setData, editState, setEditState }) => {
 // View
 const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete, handleAdd, handleGetDish, setData }) => {
   useEffect(() => {
-    // Fetch dish details when the component mounts (you can replace '1' with the desired dish id)
     handleGetDish(1);
   }, [handleGetDish]);
 
   return (
     <div className="body">
-    {/* przerwa */}
+
     <div className="h-10 w-10"></div>
 
     <Navbar />
 
     <div className="flex flex-col items-center justify-center order-1">
       <h2 className="text-center text-3xl text-secondary font-semibold">Panel administratora</h2>
-      {/* przerwa */}
       <div className="h-4 w-10"></div>
 
-      {/* Main text */}
       <div className="inline-flex items-center justify-center">
         <div className="bg-primary h-three w-28 inline-flex order-1"></div>
         <div className="h-10 w-8 inline-flex order-2"></div>
@@ -112,7 +109,6 @@ const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete
         <div>
           <AddDish handleAdd={handleAdd} />
           <form onSubmit={(event) => handleAddDish(event, handleAdd)}>
-          {/* przerwa */}
           <div className="h-10 w-10"></div>
 
           <table className="border-primary border-b-2 border-collapse text-2xl text-center shadow-md">
@@ -157,7 +153,6 @@ const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete
             ))}
           </table>
 
-          {/* przerwa */}
           <div className="h-10 w-10"></div>
         </form>
       </div>
