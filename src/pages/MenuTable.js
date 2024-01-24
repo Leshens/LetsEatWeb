@@ -7,20 +7,27 @@ import axios from 'axios';
 // Model
 const MenuTableModel = ({ data, setData, editState, setEditState }) => {
   
-  const handleUpdate = async (event, current) => {
+  const handleUpdate = async (event, menuId, name, price) => {
     event.preventDefault();
-    const name = event.target.elements.name.value;
-    const price = event.target.elements.price.value;
-    const serverIP = process.env.REACT_APP_SERVER_IP
+    const serverIP = process.env.REACT_APP_SERVER_IP;
+    const restaurantId = localStorage.getItem('restaurantId');
+    const token = localStorage.getItem('token');
+  
     try {
-      const response = await axios.patch(`${serverIP}/menus/${current.id}`, { name, price });
-      const updatedData = data.map((d) => (d.id === current.id ? response.data : d));
+      const response = await axios.patch(`${serverIP}/menus/${menuId}`,{ name, price, restaurantId },{
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      const updatedData = data.map((d) => (d.menuId === menuId ? response.data : d));
       setEditState(-1);
       setData(updatedData);
     } catch (error) {
       console.error('Error updating dish:', error);
     }
   };
+  
 
   const handleEdit = (id) => {
     setEditState(id);
@@ -130,13 +137,13 @@ const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete
                     <td className="px-6 py-4 bg-lightSecondary">{current.name}</td>
                     <td className="px-6 py-4 bg-lightSecondary">{current.price}</td>
                     <td className="px-6 py-4 bg-lightSecondary">
-                    {/* <button
+                    <button
                       type="button"
                       className="edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2"
                       onClick={() => handleEdit(current.menuId)}
                     >
                       Edit
-                    </button> */}
+                    </button>
                     <button
                       type="button"
                       className="delete text-white hover:text-primary bg-red-500 hover:bg-pink-900 rounded-full px-4 py-2"
@@ -181,39 +188,59 @@ const MenuTablePresenter = () => {
 
 export default MenuTablePresenter;
 
-function EditDish({ current, data, setData, handleUpdate }) {
-  function handleName(event) {
-    const name = event.target.value;
-    const updatedData = data.map((d) => (d.id === current.id ? { ...d, name: name } : d));
-    setData(updatedData);
-  }
+function EditDish({ current, handleUpdate }) {
+  const [name, setName] = useState(current.name);
+  const [price, setPrice] = useState(current.price);
 
-  function handlePrice(event) {
-    const price = event.target.value;
-    const updatedData = data.map((d) => (d.id === current.id ? { ...d, price: price } : d));
-    setData(updatedData);
-  }
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handlePriceChange = (event) => {
+    setPrice(event.target.value);
+  };
 
   return (
     <tr className="bg-green-100">
       <td>
-        <input type="text" className="w-52 py-4 bg-green-100" onChange={handleName} value={current.name} name="name" placeholder="Wpisz nazwę" />
+        <input
+          type="text"
+          className="w-52 py-4 bg-green-100"
+          onChange={handleNameChange}
+          value={name}
+          name="name"
+          placeholder="Wpisz nazwę"
+        />
       </td>
       <td>
-        <input type="float" className="w-24 py-4 bg-green-100" onChange={handlePrice} value={current.price} name="price" placeholder="Wpisz cenę" />
+        <input
+          type="float"
+          className="w-24 py-4 bg-green-100"
+          onChange={handlePriceChange}
+          value={price}
+          name="price"
+          placeholder="Wpisz cenę"
+        />
       </td>
       <td>
-        <button
-          type="submit"
-          className="edit text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2"
-          onClick={(event) => handleUpdate(event, current)}
-        >
-          Update
-        </button>
+      <button
+  type="button"
+  className="edit text-primary hover:text-white bg-gray-800 hover:bg-primary rounded-full px-4 py-2"
+  onClick={(event) => {
+    console.log('Event:', event);
+    console.log('Current:', current);
+    console.log('Name:', name);
+    console.log('Price:', price);
+    handleUpdate(event, current.menuId, name, price);
+  }}
+>
+  Update
+</button>
       </td>
     </tr>
   );
 }
+
 
 const handleAddDish = async (event, handleAdd) => {
   event.preventDefault();
