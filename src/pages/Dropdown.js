@@ -18,99 +18,70 @@ const CloseIcon = () => {
     );
 };
 
-const Dropdown = ({ placeHolder, options, isMulti }) => {
+const Dropdown = ({ placeHolder, options, onChange }) => {
     const [showMenu, setShowMenu] = useState(false);
-    const [selectedValue, setSelectedValue] = useState(isMulti ? [] : null);
-
+    const [selectedValue, setSelectedValue] = useState(null);
+  
     useEffect(() => {
-        const handler = () => setShowMenu(false);
-
-        window.addEventListener("click", handler);
-        return () => {
-            window.removeEventListener("click", handler);
-        };
+      const handler = () => setShowMenu(false);
+  
+      window.addEventListener("click", handler);
+      return () => {
+        window.removeEventListener("click", handler);
+      };
     });
+  
     const handleInputCheck = (e) => {
-        e.stopPropagation();
-        setShowMenu(!showMenu);
+      e.stopPropagation();
+      setShowMenu(!showMenu);
     };
-
+  
     const getDisplay = () => {
-        if (!selectedValue || selectedValue.length === 0) {
-            return placeHolder;
-        }
-        if (isMulti) {
-            return (
-                <div className="dropdown-tags">
-                    {selectedValue.map((option) => (
-                        <div key={option.value} className="dropdown-tag-item">
-                            {option.label}
-                            <span onClick={(e) => onTagRemove(e, option)} className="dropdown-tag-close"><CloseIcon /></span>
-                        </div>
-                    ))}
-                </div>
-            );
-        }
-        return selectedValue.label;
+      if (!selectedValue) {
+        return placeHolder;
+      }
+      return selectedValue.label;
     };
-
-    const removeOption = (option) => {
-        return selectedValue.filter((o) => o.value !== option.value);
-    };
-    const onTagRemove = (e, option) => {
-        e.stopPropagation();
-        setSelectedValue(removeOption(option));
-    };
-
+  
     const onItemClick = (option) => {
-        let newValue;
-        if (isMulti) {
-            if (selectedValue.findIndex((o) => o.value === option.value) >= 0) {
-                newValue = removeOption(option);
-            } else {
-                newValue = [...selectedValue, option];
-            }
-        } else {
-            newValue = option;
-        }
-        setSelectedValue(newValue);
+      setSelectedValue(option);
+      setShowMenu(false);
+  
+      // Ensure onChange is a function before calling it
+      if (typeof onChange === 'function') {
+        onChange(option.value);
+      }
     };
-
-  const isSelected = (option) => {
-    if (isMulti) {
-        return selectedValue.filter((o) => o.value === option.value).length > 0;
-    }
-    if (!selectedValue) {
-        return false;
-    }
-    return selectedValue.value === option.value;
-  };
-
-  return (
-    <div className="dropdown-container">
-      <div onClick={handleInputCheck} className="dropdown-input">
-        <div className="dropdown-selected-value">{getDisplay()}</div>
-        <div className="dropdown-tools">
-          <div className="dropdown-tool">
-            <Icon />
+  
+    const isSelected = (option) => {
+      return selectedValue && selectedValue.value === option.value;
+    };
+  
+    return (
+      <div className="dropdown-container">
+        <div onClick={handleInputCheck} className="dropdown-input">
+          <div className="dropdown-selected-value">{getDisplay()}</div>
+          <div className="dropdown-tools">
+            <div className="dropdown-tool">
+              <Icon />
+            </div>
           </div>
         </div>
-      </div>
-      {showMenu && (
-      <div className="dropdown-menu">
-        {options.map((option) => (
-            <div
-            onClick={() => onItemClick(option)}
-             key={option.value} 
-             className={`dropdown-item ${isSelected(option) && "selected"}`}
-             >
+        {showMenu && (
+          <div className="dropdown-menu">
+            {options.map((option) => (
+              <div
+                onClick={() => onItemClick(option)}
+                key={option.value}
+                className={`dropdown-item ${isSelected(option) && "selected"}`}
+              >
                 {option.label}
-            </div>    
-        ))}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-      )}
-    </div>
-  );
-};
-
-export default Dropdown;
+    );
+  };
+  
+  export default Dropdown;

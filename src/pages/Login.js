@@ -122,7 +122,7 @@ const LoginPresenter = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
       const user = userCredential.user;
-      localStorage.setItem('token', user.accessToken);
+      localStorage.setItem('token', user.uid);
       localStorage.setItem('user', JSON.stringify(user));
       navigate('/AdminMenu');
     } catch (error) {
@@ -136,7 +136,7 @@ const LoginPresenter = () => {
     try {
       const userCredential = await signInWithPopup(auth, provider);
       const user = userCredential.user;
-      localStorage.setItem('token', user.accessToken);
+      localStorage.setItem('token', user.uid);
       localStorage.setItem('user', JSON.stringify(user));
       navigate('/AdminMenu');
     } catch (error) {

@@ -118,7 +118,7 @@ const SignupPresenter = () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
       const user = userCredential.user;
-      localStorage.setItem('token', user.accessToken);
+      localStorage.setItem('token', user.uid);
       localStorage.setItem('user', JSON.stringify(user));
       navigate('/RestaurantForm');
     } catch (error) {
@@ -137,7 +137,7 @@ const SignupPresenter = () => {
     try {
       const userCredential = await signInWithPopup(auth, provider);
       const user = userCredential.user;
-      localStorage.setItem('token', user.accessToken);
+      localStorage.setItem('token', user.uid);
       localStorage.setItem('user', JSON.stringify(user));
       navigate('/RestaurantForm');
     } catch (error) {
