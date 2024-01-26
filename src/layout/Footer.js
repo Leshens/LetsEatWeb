@@ -41,7 +41,7 @@ const Footer = () => {
               </div>
           </div>
       </div>
-      <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+      <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
       <div class="sm:flex sm:items-center sm:justify-between">
           <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="http://31.179.139.182/.com/" class="hover:underline">Let's Eat™</a>. All Rights Reserved.
           </span>

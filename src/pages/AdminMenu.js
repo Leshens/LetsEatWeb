@@ -116,60 +116,60 @@ const AdminMenuView = ({ data, editState, handleUpdate, handleEdit, setData }) =
       <div>
         <form onSubmit={handleUpdate}>
           <table className="border-primary border-b-2 border-collapse text-2xl text-center shadow-md">
-            <thead className="text-secondary border-primary border-b-2">
-            <th scope="col" className="px-6 py-4 bg-inBetween">
+            <thead className="text-white border-primary border-b-2">
+            <th scope="col" className="px-6 py-4 bg-primary">
                 Token
               </th>
-              <th scope="col" className="px-6 py-4 bg-inBetween">
+              <th scope="col" className="px-6 py-4 bg-primary">
                 Nazwa
               </th>
-              <th scope="col" className="px-6 py-4 bg-inBetween">
+              <th scope="col" className="px-6 py-4 bg-primary">
                 Kategoria
               </th>
-              <th scope="col" className="px-6 py-4 bg-inBetween">
+              <th scope="col" className="px-6 py-4 bg-primary">
                 Godziny<br></br>Otwarcia
               </th>
-              <th scope="col" className="px-6 py-4 bg-inBetween">
+              <th scope="col" className="px-6 py-4 bg-primary">
                 Adres
               </th>
-              <th scope="col" className="px-6 py-4 bg-inBetween">
+              <th scope="col" className="px-6 py-4 bg-primary">
                 Telefon
               </th>
-              <th scope="col" className="px-6 py-4 bg-inBetween">
+              <th scope="col" className="px-6 py-4 bg-primary">
                 Zdjęcie
               </th>
-              <th scope="col" className="px-6 py-4 bg-inBetween">
+              <th scope="col" className="px-6 py-4 bg-primary">
                 Strona
               </th>
-              <th scope="col" className="px-6 py-4 bg-inBetween">
+              <th scope="col" className="px-6 py-4 bg-primary">
                 Szerokość<br></br>geograficzna
               </th>
-              <th scope="col" className="px-6 py-4 bg-inBetween">
+              <th scope="col" className="px-6 py-4 bg-primary">
                 Długość<br></br>geograficzna
               </th>
-              <th scope="col" className="px-6 py-4 bg-inBetween">
+              <th scope="col" className="px-6 py-4 bg-primary">
                 Action
               </th>
               </thead>
-              <tbody>
+              <tbody classname="bg-transparent">
                 {data.map((restaurant) => (
                   editState === restaurant.id ? (
                     <EditRestaurant current={restaurant} data={data} setData={setData} key={restaurant.id} />
                   ) : (
                     <tr className="" key={restaurant.id}>
-                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.token}</td>
-                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.restaurantName}</td>
-                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.restaurantCategory}</td>
-                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.openingHours}</td>
-                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.location}</td>
-                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.phoneNumber}</td>
-                      <td className="px-6 py-4 bg-lightSecondary">
+                      <td className="px-6 py-4 bg-white">{restaurant.token}</td>
+                      <td className="px-6 py-4 bg-white">{restaurant.restaurantName}</td>
+                      <td className="px-6 py-4 bg-white">{restaurant.restaurantCategory}</td>
+                      <td className="px-6 py-4 bg-white">{restaurant.openingHours}</td>
+                      <td className="px-6 py-4 bg-white">{restaurant.location}</td>
+                      <td className="px-6 py-4 bg-white">{restaurant.phoneNumber}</td>
+                      <td className="px-6 py-4 bg-white">
                         <img src={restaurant.photoLink} alt="" className="h-32"></img>
                       </td>
-                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.websiteLink}</td>
-                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.latitude}</td>
-                      <td className="px-6 py-4 bg-lightSecondary">{restaurant.longitude}</td>
-                      <td className="px-6 py-4 bg-lightSecondary">
+                      <td className="px-6 py-4 bg-white">{restaurant.websiteLink}</td>
+                      <td className="px-6 py-4 bg-white">{restaurant.latitude}</td>
+                      <td className="px-6 py-4 bg-white">{restaurant.longitude}</td>
+                      <td className="px-6 py-4 bg-white">
                         <button
                           type="button"
                           className="edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2"

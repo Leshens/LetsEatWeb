@@ -34,7 +34,7 @@ const LoginView = ({ onSubmit, onGoogleSignIn, errorMessage }) => (
             id="email"
             name="email"
             placeholder="email"
-            className="text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow"
+            className="bg-transparent text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow"
             required
           />
           <ErrorMessage name="email" component="div" className="error-message text-primary" />
@@ -51,7 +51,7 @@ const LoginView = ({ onSubmit, onGoogleSignIn, errorMessage }) => (
             id="password"
             name="password"
             placeholder="password"
-            className="text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow"
+            className="bg-transparent text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow"
             required
           />
           <ErrorMessage name="password" component="div" className="error-message text-primary" />

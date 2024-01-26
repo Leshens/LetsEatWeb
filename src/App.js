@@ -15,7 +15,7 @@ export default function App() {
   const userInLocalStorage = localStorage.getItem("user");
 
   return (
-    <div className="App bg-gradient-to-b from-white to-teal-200">
+    <div className="App bg-gradient-to-b from-white to-primary dark:#474d4c">
       <BrowserRouter>
         <Routes>
           {userInLocalStorage ? (
