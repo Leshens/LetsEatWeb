@@ -112,15 +112,15 @@ const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete
           <div className="h-10 w-10"></div>
 
           <table className="border-primary border-b-2 border-collapse text-2xl text-center shadow-md">
-            <thead className="text-secondary border-primary border-b-2">
+            <thead className="text-white border-primary border-b-2">
               <tr>
-                <th scope="col" className="px-6 py-4 bg-inBetween">
+                <th scope="col" className="px-6 py-4 bg-primary">
                   Nazwa
                 </th>
-                <th scope="col" className="px-6 py-4 bg-inBetween">
+                <th scope="col" className="px-6 py-4 bg-primary">
                   Cena
                 </th>
-                <th scope="col" className="px-6 py-4 bg-inBetween">
+                <th scope="col" className="px-6 py-4 bg-primary">
                   Action
                 </th>
               </tr>
@@ -130,9 +130,9 @@ const MenuTableView = ({ data, editState, handleUpdate, handleEdit, handleDelete
                   <EditDish key={current.menuId} current={current} data={data} setData={setData} handleUpdate={handleUpdate} />
                 ) : (
                   <tr key={current.menuId}>
-                    <td className="px-6 py-4 bg-lightSecondary">{current.name}</td>
-                    <td className="px-6 py-4 bg-lightSecondary">{current.price}</td>
-                    <td className="px-6 py-4 bg-lightSecondary">
+                    <td className="px-6 py-4 bg-white">{current.name}</td>
+                    <td className="px-6 py-4 bg-white">{current.price}</td>
+                    <td className="px-6 py-4 bg-white">
                     <button
                       type="button"
                       className="edit text-white hover:text-primary bg-primary hover:bg-gray-800 rounded-full px-4 py-2"
