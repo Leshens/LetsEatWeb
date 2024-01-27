@@ -92,7 +92,7 @@ const RestaurantFormView = ({ handleFormSubmit }) => {
                 type="string"
                 name="restaurantName"
                 placeholder="nazwa restauracji"
-                className="form-control"
+                className="form-control bg-transparent text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow"
                 value={values['restaurantName']}
                 onChange={handleChange}
               />
@@ -112,7 +112,7 @@ const RestaurantFormView = ({ handleFormSubmit }) => {
                 type="string"
                 name="openingHours"
                 placeholder="Godziny otwarcia"
-                className="form-control"
+                className="form-control bg-transparent text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow"
                 value={values['openingHours']}
                 onChange={handleChange}
               />
@@ -121,7 +121,7 @@ const RestaurantFormView = ({ handleFormSubmit }) => {
                 type="string"
                 name="location"
                 placeholder="adres"
-                className="form-control"
+                className="form-control bg-transparent text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow"
                 value={values['location']}
                 onChange={handleChange}
               />
@@ -130,7 +130,7 @@ const RestaurantFormView = ({ handleFormSubmit }) => {
                 type="string"
                 name="phoneNumber"
                 placeholder="numer telefonu"
-                className="form-control"
+                className="form-control bg-transparent text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow"
                 value={values['phoneNumber']}
                 onChange={handleChange}
               />
@@ -139,7 +139,7 @@ const RestaurantFormView = ({ handleFormSubmit }) => {
                 type="string"
                 name="photoLink"
                 placeholder="Link do zdjęcia restauracji"
-                className="form-control"
+                className="form-control bg-transparent text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow"
                 value={values['photoLink']}
                 onChange={handleChange}
               />
@@ -148,7 +148,7 @@ const RestaurantFormView = ({ handleFormSubmit }) => {
                 type="string"
                 name="websiteLink"
                 placeholder="Link do strony internetowej"
-                className="form-control"
+                className="form-control bg-transparent text-xl w-52 focus:outline-none focus:outline-offset-0 focus:border-primary focus:border-3 focus:rounded focus:shadow-primaryShadow"
                 value={values['websiteLink']}
                 onChange={handleChange}
               />

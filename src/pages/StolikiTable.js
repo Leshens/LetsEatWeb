@@ -98,7 +98,7 @@ const StolikiTableView = ({ data, handleDelete, handleAddTableSubmit }) => {
       <div className='tablesContainer flex items-center justify-center h-screen'>
         <div>
           {/* Card for adding a new table (always visible) */}
-          <div className='bg-lightSecondary p-4 rounded-md cursor-pointer text-center border border-primary shadow-md'>
+          <div className='bg-white p-4 rounded-md cursor-pointer text-center border border-primary shadow-md'>
             <p className='text-xl font-semibold mb-2'>Add Table</p>
             <div className='flex items-center justify-center'>
               <input
@@ -120,7 +120,7 @@ const StolikiTableView = ({ data, handleDelete, handleAddTableSubmit }) => {
           {/* Existing table cards */}
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4'>
             {data.map((current) => (
-              <div key={current.tableId} className='bg-lightSecondary p-4 rounded-md'>
+              <div key={current.tableId} className='bg-white p-4 rounded-md'>
                 <p className='text-xl font-semibold mb-2'>Size: {current.size}</p>
                 <button
                   type='button'
