@@ -15,6 +15,7 @@ const Navbar = () => {
       // Sign-out successful.
       localStorage.removeItem('token');
       localStorage.removeItem('user');
+      localStorage.removeItem('restaurantId');
       setUser(null);
       navigate("/");
     }).catch((error) => {
