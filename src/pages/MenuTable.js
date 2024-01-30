@@ -14,7 +14,7 @@ const MenuTableModel = ({ data, setData, editState, setEditState }) => {
     const token = localStorage.getItem('token');
   
     try {
-      const response = await axios.patch(`${serverIP}/menus/${menuId}`,{ name, price, restaurantId },{
+      const response = await axios.patch(`${serverIP}/menus/${menuId}`,{ name, price, restaurantId, token },{
           headers: {
             Authorization: `${token}`,
           },
